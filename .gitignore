@@ -1,3 +1,11 @@
 *
+!**/
+
+**/[bB]in/**
+**/[dD]ebug/**
 
 !.gitignore
+!**.cs
+!**.csproj
+!**.sln
+!**.slnf
