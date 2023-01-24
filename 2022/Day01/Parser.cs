@@ -1,52 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Day1;
 
-internal class Parser : IDisposable
+internal class Parser
 {
 	public static List<List<int>> ParseInput(string input)
 	{
-		using var parser = new Parser(input);
-
-		return parser.ParseInput();
+		var parser = new Parser(input);
+		parser.ProvisionElfs();
+		return parser.Elves;
 	}
 
-	readonly StringReader Stream;
+	private readonly IEnumerator<string> Input;
+	private readonly List<List<int>> Elves = new();
 
 	private Parser(string input)
 	{
-		Stream = new StringReader(input);
+		Input = input.Split("\n").Select(s => s.Trim()).GetEnumerator();
+		Input.MoveNext();
+		Elves = new();
 	}
 
-	public void Dispose()
+	private void ProvisionElfs()
 	{
-		Stream.Dispose();
-	}
-
-	private List<List<int>> ParseInput()
-	{
-		var elves = new List<List<int>>();
-
-		while(Stream.Peek() != -1)
+		do
 		{
-			var elf = new List<int>();
-
-			while(true)
-			{
-				var line = Stream.ReadLine();
-				if(string.IsNullOrEmpty(line))
-					break;
-
-				elf.Add(int.Parse(line));
-			}
-
-			elves.Add(elf);
+			ProvisionElf();
 		}
+		while(NextElf());
+	}
 
-		return elves;
+	private bool NextElf() => Input.MoveNext();
+
+	private void ProvisionElf()
+	{
+		var elf = new List<int>();
+		GiveRations(elf);
+		Elves.Add(elf);
+	}
+
+	private void GiveRations(List<int> elf)
+	{
+		do
+		{
+			var ration = CreateRation();
+			elf.Add(ration);
+		}
+		while(NextRation());
+	}
+
+	private bool NextRation() => Input.MoveNext() && !string.IsNullOrWhiteSpace(Input.Current);
+
+	private int CreateRation()
+	{
+		return int.Parse(Input.Current);
 	}
 }
