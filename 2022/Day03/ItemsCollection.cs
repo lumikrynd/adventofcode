@@ -1,36 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Day03
+namespace Day03;
+
+internal class ItemsCollection
 {
-	internal class ItemsCollection
+	private readonly string[] itemCollections;
+
+	protected ItemsCollection(params string[] itemCollections)
 	{
-		private readonly string[] itemCollections;
+		this.itemCollections = itemCollections;
+	}
 
-		protected ItemsCollection(params string[] itemCollections)
+	public int GetRearrangementPriority()
+	{
+		int priority = 0;
+		var duplicateItems = GetIntersections();
+		foreach(var item in duplicateItems)
 		{
-			this.itemCollections = itemCollections;
+			priority += ItemPriority(item);
 		}
+		return priority;
+	}
 
-		public int GetRearrangementPriority()
+	private IEnumerable<char> GetIntersections()
+	{
+		IEnumerable<char> result = itemCollections[0];
+		for(int i = 1; i < itemCollections.Length; i++)
 		{
-			int priority = 0;
-			var duplicateItems = GetIntersections();
-			foreach(var item in duplicateItems)
-			{
-				priority += PriorityCalculater.ItemPriority(item);
-			}
-			return priority;
+			result = result.Intersect(itemCollections[i]);
 		}
+		return result.Distinct();
+	}
 
-		private IEnumerable<char> GetIntersections()
+	public static int ItemPriority(char item)
+	{
+		return item switch
 		{
-			IEnumerable<char> result = itemCollections[0];
-			for(int i = 1; i < itemCollections.Length; i++)
-			{
-				result = result.Intersect(itemCollections[i]);
-			}
-			return result.Distinct();
-		}
+			(>= 'a' and <= 'z') => (item - 'a' + 1),
+			(>= 'A' and <= 'Z') => (item - 'A' + 27),
+			_ => throw new NotImplementedException(),
+		};
 	}
 }

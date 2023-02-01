@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Day03;
 
@@ -16,7 +12,7 @@ internal class BackpackerGroupParser
 
 	readonly IEnumerator<string> iterator;
 	private bool more = true;
-	private List<BackpackerGroup> groups = new();
+	private readonly List<BackpackerGroup> groups = new();
 
 	private BackpackerGroupParser(IEnumerable<string> backpackRawData)
 	{
@@ -52,8 +48,5 @@ internal class BackpackerGroupParser
 		return current;
 	}
 
-	private IEnumerable<BackpackerGroup> GetResult()
-	{
-		return groups;
-	}
+	private IEnumerable<BackpackerGroup> GetResult() => groups;
 }
