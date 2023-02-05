@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Versioning;
 using Day05.Models;
 using Day05.Parsers;
 using FluentAssertions;
