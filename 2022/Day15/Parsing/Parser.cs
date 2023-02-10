@@ -39,7 +39,7 @@ internal class Parser
 
 	private static INode CreateNodeFromCoordinates(ParsedLine input, int pow2size, (int x, int y) lowerBound)
 	{
-		var distance = Coordinate.ManhattenDistance(input.SensorPosition, input.BeaconPosition);
+		var distance = CoordinateHelpers.ManhattenDistance(input.SensorPosition, input.BeaconPosition);
 		var relativePosition = input.SensorPosition.RelativeTo(lowerBound);
 
 		return GenerateNode(relativePosition, distance, pow2size);
@@ -95,7 +95,7 @@ internal class Parser
 		foreach (var coord in coordinates)
 		{
 			var sensor = coord.SensorPosition;
-			var dist = Coordinate.ManhattenDistance(sensor, coord.BeaconPosition);
+			var dist = CoordinateHelpers.ManhattenDistance(sensor, coord.BeaconPosition);
 
 			xMin = Math.Min(xMin, sensor.x - dist);
 			yMin = Math.Min(yMin, sensor.y - dist);

@@ -1,24 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Helpers;
 
-namespace Helpers
+public class Coordinate
 {
-	public static class Coordinate
-	{
-		public static int ManhattenDistance(this (int x, int y) a, (int x, int y) b)
-		{
-			return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
-		}
+	int X { get; }
+	int Y { get; }
 
-		/// <summary>
-		/// Vector to "to" from "from".
-		/// </summary>
-		public static (int x, int y) RelativeTo(this (int x, int y) to, (int x, int y) from)
-		{
-			return (to.x - from.x, to.y - from.y);
-		}
+	public Coordinate(int x, int y)
+	{
+		X = x;
+		Y = y;
+	}
+
+	public int ManhattenDistance(Coordinate other)
+	{
+		return Math.Abs(X - other.X) + Math.Abs(Y - other.Y);
+	}
+
+	public int ChebyshewDistance(Coordinate other)
+	{
+		return Math.Max(Math.Abs(X - other.X), Math.Abs(Y - other.Y));
+	}
+
+	/// <summary>
+	/// Get vector to
+	/// </summary>
+	public (int x, int y) GetVectorTo(Coordinate To)
+	{
+		return (To.X - X, To.Y - Y);
+	}
+
+	public Coordinate Clone()
+	{
+		return new Coordinate(X, Y);
 	}
 }
