@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Day08;
 
@@ -9,8 +7,8 @@ internal partial class TreeGroove
 {
 	public int[,] Trees { get; }
 
-	int Height => Trees.GetLength(0);
-	int Width => Trees.GetLength(1);
+	public int Height => Trees.GetLength(0);
+	public int Width => Trees.GetLength(1);
 
 	public TreeGroove(int[,] trees)
 	{
@@ -78,5 +76,76 @@ internal partial class TreeGroove
 		}
 
 		return visibleTrees.Count;
+	}
+
+	public int CountVisibleTreesV2()
+	{
+		var visibleTrees = new HashSet<TreeCordinate>();
+		int curHeighest = -1;
+
+		var west = this.Traverse()
+			.From(new(0, 0))
+			.IncreaseYToEdge()
+			.FreezeX()
+			.DoAction(resetHeighest)
+			.IncreaseXWhile(IsNotMaxHeight)
+			.If(ShouldAdd)
+			.DoAction(AddVisibleTree);
+		west.Execute();
+
+		var east = this.Traverse()
+			.From(new(Width - 1, 0))
+			.IncreaseYToEdge()
+			.FreezeX()
+			.DoAction(resetHeighest)
+			.DecreaseXWhile(IsNotMaxHeight)
+			.If(ShouldAdd)
+			.DoAction(AddVisibleTree);
+		east.Execute();
+
+		var north = this.Traverse()
+			.From(new(0, 0))
+			.IncreaseXToEdge()
+			.FreezeY()
+			.DoAction(resetHeighest)
+			.IncreaseYWhile(IsNotMaxHeight)
+			.If(ShouldAdd)
+			.DoAction(AddVisibleTree);
+		north.Execute();
+
+		var south = this.Traverse()
+			.From(new(0, Height - 1))
+			.IncreaseXToEdge()
+			.FreezeY()
+			.DoAction(resetHeighest)
+			.DecreaseYWhile(IsNotMaxHeight)
+			.If(ShouldAdd)
+			.DoAction(AddVisibleTree);
+		south.Execute();
+
+		return visibleTrees.Count;
+
+		bool IsNotMaxHeight(TraversalState state)
+		{
+			return curHeighest < 9;
+		}
+
+		void resetHeighest()
+		{
+			curHeighest = -1;
+		}
+
+		bool ShouldAdd(TraversalState state)
+		{
+			var treeHeight = Trees[state.Y, state.X];
+			return treeHeight > curHeighest;
+		}
+
+		void AddVisibleTree(TraversalState state)
+		{
+			var treeHeight = Trees[state.Y, state.X];
+			curHeighest = treeHeight;
+			visibleTrees.Add(new TreeCordinate(state.X, state.Y));
+		}
 	}
 }
