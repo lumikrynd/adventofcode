@@ -83,45 +83,33 @@ internal partial class TreeGroove
 		var visibleTrees = new HashSet<TreeCordinate>();
 		int curHeighest = -1;
 
-		var west = this.Traverse()
+		var allWayRound = this.Traverse()
 			.From(new(0, 0))
-			.Increase().Y().ToEdge()
-			.Freeze().X()
-			.DoAction(resetHeighest)
-			.Increase().X().While(IsNotMaxHeight)
+			.ExecuteSerial(
+				state => state
+					.Increase().X().ToEdge()
+					.Freeze().Y()
+					.Do(resetHeighest)
+					.Increase().Y().While(IsNotMaxHeight),
+				state => state
+					.Increase().Y().ToEdge()
+					.Freeze().X()
+					.Do(resetHeighest)
+					.Decrease().X().While(IsNotMaxHeight),
+				state => state
+					.Decrease().X().ToEdge()
+					.Freeze().Y()
+					.Do(resetHeighest)
+					.Decrease().Y().While(IsNotMaxHeight),
+				state => state
+					.Decrease().Y().ToEdge()
+					.Freeze().X()
+					.Do(resetHeighest)
+					.Increase().X().While(IsNotMaxHeight)
+				)
 			.If(ShouldAdd)
 			.DoAction(AddVisibleTree);
-		west.Execute();
-
-		var east = this.Traverse()
-			.From(new(Width - 1, 0))
-			.Increase().Y().ToEdge()
-			.Freeze().X()
-			.DoAction(resetHeighest)
-			.Decrease().X().While(IsNotMaxHeight)
-			.If(ShouldAdd)
-			.DoAction(AddVisibleTree);
-		east.Execute();
-
-		var north = this.Traverse()
-			.From(new(0, 0))
-			.Increase().X().ToEdge()
-			.Freeze().Y()
-			.DoAction(resetHeighest)
-			.Increase().Y().While(IsNotMaxHeight)
-			.If(ShouldAdd)
-			.DoAction(AddVisibleTree);
-		north.Execute();
-
-		var south = this.Traverse()
-			.From(new(0, Height - 1))
-			.Increase().X().ToEdge()
-			.Freeze().Y()
-			.DoAction(resetHeighest)
-			.Decrease().Y().While(IsNotMaxHeight)
-			.If(ShouldAdd)
-			.DoAction(AddVisibleTree);
-		south.Execute();
+		allWayRound.Execute();
 
 		return visibleTrees.Count;
 

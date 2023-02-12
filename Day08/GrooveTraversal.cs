@@ -85,7 +85,7 @@ internal static class TraversalFluency
 		return groove.Traverse().From(coord);
 	}
 
-	public static TraversalState DoAction(this TraversalState state, Action act)
+	public static TraversalState Do(this TraversalState state, Action act)
 	{
 		return state.DoAction(_ => act());
 	}
@@ -213,6 +213,31 @@ internal static class TraversalFluency
 			return state.InjectAction(newAction, newOuter);
 		}
 		return new(state, Create);
+	}
+
+	public static TraversalState ExecuteSerial(this TraversalState state, params Func<TraversalState, TraversalState>[] actions)
+	{
+		var todo = new List<Action>();
+		void newAction()
+		{
+			foreach(var act in todo)
+			{
+				act();
+			}
+		}
+
+		var newOuter = new TraversalStep();
+		var originalOuterStep = state.OuterStep;
+
+		foreach(var action in actions)
+		{
+			action(state);
+			todo.Add(originalOuterStep.Task);
+			state.OuterStep.Task = () => newOuter.Task();
+			state.OuterStep = originalOuterStep;
+		}
+
+		return state.InjectAction(newAction, newOuter);
 	}
 
 	private static TraversalState InjectAction(this TraversalState state, Action newAction, TraversalStep newOuter)
