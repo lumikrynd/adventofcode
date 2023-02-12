@@ -36,6 +36,41 @@ public class TraversalStep
 	public Action Task { get; set; } = () => { };
 }
 
+public class NeedProperty<T>
+{
+	public Func<Func<int>, Action<int>, int, T> Creator { get; }
+	public TraversalState State { get; }
+
+	public NeedProperty(TraversalState state, Func<Func<int>, Action<int>, int, T> propInjector)
+	{
+		State = state;
+		Creator = propInjector;
+	}
+
+	public T Inject(Func<int> get, Action<int> set, int length)
+	{
+		return Creator(get, set, length);
+	}
+}
+
+public class TraversalNeedLimit
+{
+	public TraversalState State { get; }
+	public Func<int> Get { get; }
+	public Action<int> Set { get; }
+	public int Length { get; }
+	public Func<int, int> Changer { get; }
+
+	public TraversalNeedLimit(TraversalState state, Func<int> get, Action<int> set, int length, Func<int, int> step)
+	{
+		State = state;
+		Get = get;
+		Set = set;
+		Length = length;
+		Changer = step;
+	}
+}
+
 internal static class TraversalFluency
 {
 	public static TraversalState Traverse(this TreeGroove groove)
@@ -47,8 +82,7 @@ internal static class TraversalFluency
 
 	public static TraversalState Traverse(this TreeGroove groove, Coordinate coord)
 	{
-		var state = groove.Traverse();
-		return state.From(coord);
+		return groove.Traverse().From(coord);
 	}
 
 	public static TraversalState DoAction(this TraversalState state, Action act)
@@ -95,61 +129,50 @@ internal static class TraversalFluency
 		return state.InjectAction(newAction, newOuter);
 	}
 
-	public static TraversalState IncreaseXToEdge(this TraversalState state)
+	public static NeedProperty<TraversalNeedLimit> Increase(this TraversalState state)
 	{
-		return state.IncreaseXWhile(_ => true);
+		return state.Change(p => p + 1);
 	}
 
-	public static TraversalState IncreaseYToEdge(this TraversalState state)
+	public static NeedProperty<TraversalNeedLimit> Decrease(this TraversalState state)
 	{
-		return state.IncreaseYWhile(_ => true);
+		return state.Change(p => p - 1);
 	}
 
-	public static TraversalState IncreaseXWhile(this TraversalState state, Func<TraversalState, bool> @while)
+	private static NeedProperty<TraversalNeedLimit> Change(this TraversalState state, Func<int, int> step)
 	{
-		void set(int x) => state.X = x;
-		return state.IncreaseWhile(() => state.X, @while, set, state.XLength); ;
+		TraversalNeedLimit Create(Func<int> get, Action<int> set, int length)
+		{
+			return new TraversalNeedLimit(state, get, set, length, step);
+		}
+		return new(state, Create);
 	}
 
-	public static TraversalState IncreaseYWhile(this TraversalState state, Func<TraversalState, bool> @while)
+	public static T X<T>(this NeedProperty<T> command)
 	{
-		void set(int y) => state.Y = y;
-		return state.IncreaseWhile(() => state.Y, @while, set, state.YLength);
+		var state = command.State;
+		int Get() => state.X;
+		void Set(int value) => state.X = value;
+		return command.Inject(Get, Set, state.XLength);
 	}
 
-	private static TraversalState IncreaseWhile(this TraversalState state, Func<int> start, Func<TraversalState, bool> @while, Action<int> set, int length)
+	public static T Y<T>(this NeedProperty<T> command)
 	{
-		static int increase(int p) => p + 1;
-		return state.TraverseWhile(@while, start, set, increase, length);
+		var state = command.State;
+		int Get() => state.Y;
+		void Set(int value) => state.Y = value;
+		return command.Inject(Get, Set, state.YLength);
 	}
 
-	public static TraversalState DecreaseXToBorder(this TraversalState state)
+	public static TraversalState While(this TraversalNeedLimit traversal, Func<TraversalState, bool> @while)
 	{
-		return state.DecreaseXWhile(_ => true);
+		return traversal.State.TraverseWhile(@while, traversal.Get, traversal.Set, traversal.Changer, traversal.Length);
 	}
 
-	public static TraversalState DecreaseYToBorder(this TraversalState state)
+	public static TraversalState ToEdge(this TraversalNeedLimit traversal)
 	{
-		return state.DecreaseYWhile(_ => true);
-	}
-
-	public static TraversalState DecreaseXWhile(this TraversalState state, Func<TraversalState, bool> @while)
-	{
-		void set(int x) => state.X = x;
-		return state.DecreaseWhile(() => state.X, @while, set, state.XLength); ;
-	}
-
-	public static TraversalState DecreaseYWhile(this TraversalState state, Func<TraversalState, bool> @while)
-	{
-		void set(int y) => state.Y = y;
-		return state.DecreaseWhile(() => state.Y, @while, set, state.YLength);
-	}
-
-	private static TraversalState DecreaseWhile(this TraversalState state, Func<int> start, Func<TraversalState, bool> @while, Action<int> set, int length)
-	{
-		static int Decrease(int p) => p - 1;
-		return state.TraverseWhile(@while, start, set, Decrease, length);
-	}
+		return traversal.While(_ => true);
+ 	}
 
 	private static TraversalState TraverseWhile(this TraversalState state, Func<TraversalState, bool> @while, Func<int> start, Action<int> set, Func<int, int> step, int length)
 	{
@@ -173,32 +196,23 @@ internal static class TraversalFluency
 
 	public static TraversalState FreezeCoordinate(this TraversalState state)
 	{
-		return state.FreezeX().FreezeY();
+		return state.Freeze().X().Freeze().Y();
 	}
 
-	public static TraversalState FreezeX(this TraversalState state)
+	public static NeedProperty<TraversalState> Freeze(this TraversalState state)
 	{
-		void set(int x) => state.X = x;
-		return state.Freeze(() => state.X, set); ;
-	}
-
-	public static TraversalState FreezeY(this TraversalState state)
-	{
-		void set(int y) => state.Y = y;
-		return state.Freeze(() => state.Y, set); ;
-	}
-
-	private static TraversalState Freeze(this TraversalState state, Func<int> get, Action<int> set)
-	{
-		var newOuter = new TraversalStep();
-		void newAction()
+		TraversalState Create(Func<int> get, Action<int> set, int length)
 		{
-			int initial = get();
-			newOuter.Task();
-			set(initial);
+			var newOuter = new TraversalStep();
+			void newAction()
+			{
+				int initial = get();
+				newOuter.Task();
+				set(initial);
+			}
+			return state.InjectAction(newAction, newOuter);
 		}
-
-		return state.InjectAction(newAction, newOuter);
+		return new(state, Create);
 	}
 
 	private static TraversalState InjectAction(this TraversalState state, Action newAction, TraversalStep newOuter)

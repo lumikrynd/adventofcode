@@ -85,40 +85,40 @@ internal partial class TreeGroove
 
 		var west = this.Traverse()
 			.From(new(0, 0))
-			.IncreaseYToEdge()
-			.FreezeX()
+			.Increase().Y().ToEdge()
+			.Freeze().X()
 			.DoAction(resetHeighest)
-			.IncreaseXWhile(IsNotMaxHeight)
+			.Increase().X().While(IsNotMaxHeight)
 			.If(ShouldAdd)
 			.DoAction(AddVisibleTree);
 		west.Execute();
 
 		var east = this.Traverse()
 			.From(new(Width - 1, 0))
-			.IncreaseYToEdge()
-			.FreezeX()
+			.Increase().Y().ToEdge()
+			.Freeze().X()
 			.DoAction(resetHeighest)
-			.DecreaseXWhile(IsNotMaxHeight)
+			.Decrease().X().While(IsNotMaxHeight)
 			.If(ShouldAdd)
 			.DoAction(AddVisibleTree);
 		east.Execute();
 
 		var north = this.Traverse()
 			.From(new(0, 0))
-			.IncreaseXToEdge()
-			.FreezeY()
+			.Increase().X().ToEdge()
+			.Freeze().Y()
 			.DoAction(resetHeighest)
-			.IncreaseYWhile(IsNotMaxHeight)
+			.Increase().Y().While(IsNotMaxHeight)
 			.If(ShouldAdd)
 			.DoAction(AddVisibleTree);
 		north.Execute();
 
 		var south = this.Traverse()
 			.From(new(0, Height - 1))
-			.IncreaseXToEdge()
-			.FreezeY()
+			.Increase().X().ToEdge()
+			.Freeze().Y()
 			.DoAction(resetHeighest)
-			.DecreaseYWhile(IsNotMaxHeight)
+			.Decrease().Y().While(IsNotMaxHeight)
 			.If(ShouldAdd)
 			.DoAction(AddVisibleTree);
 		south.Execute();
