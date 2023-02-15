@@ -61,17 +61,20 @@ public class Challenge
 	public void Part2_Example()
 	{
 		var result = Part2(ExampleInput);
-		result.Should().Be(42);
-	}
-
-	private object Part2(IEnumerable<string> exampleInput)
-	{
-		throw new NotImplementedException();
+		result.Should().Be(8);
 	}
 
 	[Test]
 	public void Part2_MainPuzzle()
 	{
 		Part2(PuzzleInput);
+	}
+
+	private int Part2(IEnumerable<string> puzzleInput)
+	{
+		var groove = TreeGrooveParser.Parse(puzzleInput);
+		(int value, var coordinate) = ScenicSpotFinder.FindScenicSpotValue(groove);
+		Console.WriteLine($"Scenic value: {value} at ({coordinate.X}, {coordinate.Y})");
+		return value;
 	}
 }

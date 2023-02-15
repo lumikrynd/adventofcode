@@ -33,4 +33,9 @@ public class Coordinate
 	{
 		return new Coordinate(X, Y);
 	}
+
+	public override string ToString()
+	{
+		return $"({X}, {Y})";
+	}
 }

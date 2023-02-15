@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Helpers;
 
 namespace Day08;
 
@@ -9,6 +9,27 @@ internal partial class TreeGroove
 
 	public int Height => Trees.GetLength(0);
 	public int Width => Trees.GetLength(1);
+
+	public int GetTreeHeight(TraversalState state)
+	{
+		return GetTreeHeight(state.X, state.Y);
+	}
+
+	public int GetTreeHeight(Coordinate coord)
+	{
+		return GetTreeHeight(coord.X, coord.Y);
+	}
+
+	public int GetTreeHeight(int x, int y)
+	{
+		return Trees[y, x];
+	}
+
+	public bool ContainsCoordinate(int x, int y)
+	{
+		return x >= 0 && x < Width
+			&& y >= 0 && y < Height;
+	}
 
 	public TreeGroove(int[,] trees)
 	{
@@ -84,34 +105,52 @@ internal partial class TreeGroove
 		int curHeighest = -1;
 
 		var allWayRound = this.Traverse()
-			.From(new(0, 0))
 			.ExecuteSerial(
-				state => state
-					.Increase().X().ToEdge()
-					.Freeze().Y()
-					.Do(resetHeighest)
-					.Increase().Y().While(IsNotMaxHeight),
-				state => state
-					.Increase().Y().ToEdge()
-					.Freeze().X()
-					.Do(resetHeighest)
-					.Decrease().X().While(IsNotMaxHeight),
-				state => state
-					.Decrease().X().ToEdge()
-					.Freeze().Y()
-					.Do(resetHeighest)
-					.Decrease().Y().While(IsNotMaxHeight),
-				state => state
-					.Decrease().Y().ToEdge()
-					.Freeze().X()
-					.Do(resetHeighest)
-					.Increase().X().While(IsNotMaxHeight)
-				)
+				TraverseNorthBorder,
+				TraverseEasternBorder,
+				TraverseSouthernBorder,
+				TraverseWesternBorder)
 			.If(ShouldAdd)
 			.DoAction(AddVisibleTree);
 		allWayRound.Execute();
 
 		return visibleTrees.Count;
+
+		TraversalState TraverseNorthBorder(TraversalState state)
+		{
+			return state.From(new(0, 0))
+				.Increase().X().ToEdge()
+				.Freeze().Y()
+				.Do(resetHeighest)
+				.Increase().Y().While(IsNotMaxHeight);
+		}
+
+		TraversalState TraverseEasternBorder(TraversalState state)
+		{
+			return state.From(new(Width - 1, 0))
+				.Increase().Y().ToEdge()
+				.Freeze().X()
+				.Do(resetHeighest)
+				.Decrease().X().While(IsNotMaxHeight);
+		}
+
+		TraversalState TraverseSouthernBorder(TraversalState state)
+		{
+			return state.From(new(Width - 1, Height - 1))
+				.Decrease().X().ToEdge()
+				.Freeze().Y()
+				.Do(resetHeighest)
+				.Decrease().Y().While(IsNotMaxHeight);
+		}
+
+		TraversalState TraverseWesternBorder(TraversalState state)
+		{
+			return state.From(new(0, Height - 1))
+				.Decrease().Y().ToEdge()
+				.Freeze().X()
+				.Do(resetHeighest)
+				.Increase().X().While(IsNotMaxHeight);
+		}
 
 		bool IsNotMaxHeight(TraversalState state)
 		{
