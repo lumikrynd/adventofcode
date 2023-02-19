@@ -1,8 +1,7 @@
-using Day09;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Day08;
+namespace Day09;
 
 public class Challenge
 {

@@ -5,13 +5,12 @@ using Day07.Model.Commands;
 using Day07.Model.FileSystem;
 using Day07.Parser;
 using FluentAssertions;
-using FluentAssertions.Extensions;
 using NUnit.Framework;
 
 using Directory = Day07.Model.FileSystem.Directory;
 using File = System.IO.File;
 
-namespace Day05;
+namespace Day07;
 
 public class Challenge
 {
