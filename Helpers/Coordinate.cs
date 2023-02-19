@@ -11,11 +11,17 @@ public class Coordinate
 		Y = y;
 	}
 
+	/// <summary>
+	/// |X1 - X2| + |Y1 - Y2|
+	/// </summary>
 	public int ManhattenDistance(Coordinate other)
 	{
 		return Math.Abs(X - other.X) + Math.Abs(Y - other.Y);
 	}
 
+	/// <summary>
+	/// Max( |X1 - X2|, |Y1 - Y2| )
+	/// </summary>
 	public int ChebyshewDistance(Coordinate other)
 	{
 		return Math.Max(Math.Abs(X - other.X), Math.Abs(Y - other.Y));
@@ -37,5 +43,22 @@ public class Coordinate
 	public override string ToString()
 	{
 		return $"({X}, {Y})";
+	}
+
+	public override int GetHashCode()
+	{
+		return HashCode.Combine(X, Y);
+	}
+
+	public override bool Equals(object? obj)
+	{
+		if(obj is Coordinate coord)
+			return Equals(coord);
+		return false;
+	}
+
+	public bool Equals(Coordinate other)
+	{
+		return X == other.X && Y == other.Y;
 	}
 }
