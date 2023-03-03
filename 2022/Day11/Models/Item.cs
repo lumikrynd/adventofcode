@@ -2,5 +2,5 @@
 
 public record Item
 {
-	public int WorryLevel { get; set; }
+	public long WorryLevel { get; set; }
 }

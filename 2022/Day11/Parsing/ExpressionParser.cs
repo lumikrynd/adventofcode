@@ -2,15 +2,15 @@
 
 public class ExpressionParser
 {
-	public static Func<int, int> Parse(string input)
+	public static Func<long, long> Parse(string input)
 	{
 		var parser = new ExpressionParser(input);
 		return parser.Parse();
 	}
 
-	private Func<int, int> arg1;
-	private Func<int, int> arg2;
-	private Func<int, int, int> operation;
+	private Func<long, long> arg1;
+	private Func<long, long> arg2;
+	private Func<long, long, long> operation;
 
 	private ExpressionParser(string input)
 	{
@@ -20,20 +20,20 @@ public class ExpressionParser
 		operation = ParseOperation(parts[1]);
 	}
 
-	public Func<int, int> Parse()
+	public Func<long, long> Parse()
 	{
 		return x => operation(arg1(x), arg2(x));
 	}
 
-	private Func<int, int> ParseArgument(string arg)
+	private Func<long, long> ParseArgument(string arg)
 	{
 		if (arg == "old")
 			return x => x;
-		int result = int.Parse(arg);
+		long result = long.Parse(arg);
 		return x => result;
 	}
 
-	private Func<int, int, int> ParseOperation(string operation)
+	private Func<long, long, long> ParseOperation(string operation)
 	{
 		if (operation == "+")
 			return (x, y) => x + y;

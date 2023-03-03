@@ -3,13 +3,13 @@
 public class Monkey
 {
 	List<Item> Items { get; set; }
-	Func<int, int> WorryModifier { get; }
-	int DivisorTest { get; }
+	Func<long, long> WorryModifier { get; }
+	public int DivisorTest { get; }
 	int TrueTarget { get; }
 	int FalseTarget { get; }
 	public int InspectCount { get; private set; } = 0;
 
-	public Monkey(List<Item> items, Func<int, int> modifier, int divisor, int trueTarget, int falseTarget)
+	public Monkey(List<Item> items, Func<long, long> modifier, int divisor, int trueTarget, int falseTarget)
 	{
 		Items = items;
 		WorryModifier= modifier;
@@ -28,7 +28,7 @@ public class Monkey
 
 	private void Inspect(Item item)
 	{
-		int newValue = WorryModifier(item.WorryLevel);
+		long newValue = WorryModifier(item.WorryLevel);
 		item.WorryLevel = newValue;
 		InspectCount++;
 	}
@@ -38,6 +38,14 @@ public class Monkey
 		foreach(var item in Items)
 		{
 			item.WorryLevel /= 3;
+		}
+	}
+
+	public void ReduceWorryByDivisor(int divisor)
+	{
+		foreach(var item in Items)
+		{
+			item.WorryLevel %= divisor;
 		}
 	}
 

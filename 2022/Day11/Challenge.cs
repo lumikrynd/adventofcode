@@ -1,3 +1,4 @@
+using Day11.Models;
 using Day11.Parsing;
 using FluentAssertions;
 using NUnit.Framework;
@@ -55,7 +56,8 @@ public class Challenge
 	[Test]
 	public void Part2_Example()
 	{
-		Part2(ExampleInput);
+		var result = Part2(ExampleInput);
+		result.Should().Be(2713310158);
 	}
 
 	[Test]
@@ -64,8 +66,67 @@ public class Challenge
 		Part2(PuzzleInput);
 	}
 
-	private int Part2(IEnumerable<string> puzzleInput)
+	private long Part2(IEnumerable<string> puzzleInput)
 	{
-		throw new NotImplementedException();
+		var monkeys = MonkeyListParser.Parse(puzzleInput);
+		var leastCommonMultiple = monkeys
+			.Select(x => x.DivisorTest)
+			.Aggregate(1, LeastCommonMultiple);
+
+		for(int i = 1; i <= 10000; i++)
+		{
+			foreach(var monkey in monkeys)
+			{
+				monkey.InspectItems();
+				monkey.ReduceWorryByDivisor(leastCommonMultiple);
+				monkey.ThrowItems(monkeys);
+			}
+			LogMonkeys(i, monkeys);
+		}
+
+		for(int i = 0; i < monkeys.Count; i++)
+		{
+			var monkey = monkeys[i];
+			Console.WriteLine($"Monkey {i}: {monkey.InspectCount}");
+		}
+
+		var SortedInspectCounts = monkeys
+			.Select(x => x.InspectCount)
+			.OrderByDescending(x => x)
+			.ToList();
+
+		var result = (long)SortedInspectCounts[0] * SortedInspectCounts[1];
+		Console.WriteLine($"Multiply result: {result}");
+		return result;
+	}
+
+	private void LogMonkeys(int round, List<Monkey> monkeys)
+	{
+		if(round is 1 or 20 || round % 1000 == 0)
+		{
+			Console.WriteLine($"Round: {round}");
+			for(int i = 0; i < monkeys.Count; i++)
+			{
+				var monkey = monkeys[i];
+				Console.WriteLine($"Monkey {i}: {monkey.InspectCount}");
+			}
+			Console.WriteLine();
+		}
+	}
+
+	static int LeastCommonMultiple(int a, int b)
+	{
+		return (a / GreatestCommonFactor(a, b)) * b;
+	}
+
+	static int GreatestCommonFactor(int a, int b)
+	{
+		while (b != 0)
+		{
+			int temp = b;
+			b = a % b;
+			a = temp;
+		}
+		return a;
 	}
 }

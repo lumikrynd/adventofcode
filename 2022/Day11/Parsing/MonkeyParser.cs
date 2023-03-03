@@ -11,7 +11,7 @@ public class MonkeyParser
 	}
 
 	private List<Item> items;
-	private Func<int, int> modifier;
+	private Func<long, long> modifier;
 	private int divisor;
 	private int trueTarget;
 	private int falseTarget;
@@ -42,7 +42,7 @@ public class MonkeyParser
 
 	private Item ParseItem(string input)
 	{
-		int value = int.Parse(input);
+		var value = long.Parse(input);
 		return new Item() { WorryLevel = value };
 	}
 
@@ -60,7 +60,7 @@ public class MonkeyParser
 		return int.Parse(target);
 	}
 
-	private Func<int, int> ParseModifier(string input)
+	private Func<long, long> ParseModifier(string input)
 	{
 		const string start = "Operation: new = ";
 		string expression = input.RemoveStart(start);
