@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Helpers;
 using Day12.Maps;
 
 namespace Day12.Pathfinding;
@@ -12,7 +7,7 @@ internal class BreathFirstSearch
 {
 	Map Map { get; }
 	Queue<Position> queue { get; } = new();
-	HashSet<(int x, int y)> Enqueued = new();
+	HashSet<Coordinate> Enqueued = new();
 
 	private BreathFirstSearch(Map map)
 	{
@@ -50,12 +45,12 @@ internal class BreathFirstSearch
 		return invertedPath;
 	}
 
-	private Direction GetDirection((int x, int y) from, (int x, int y) to)
+	private Direction GetDirection(Coordinate from, Coordinate to)
 	{
-		if (from.x < to.x) return Direction.East;
-		if (from.x > to.x) return Direction.West;
-		if (from.y < to.y) return Direction.North;
-		if (from.y > to.y) return Direction.South;
+		if (from.X < to.X) return Direction.East;
+		if (from.X > to.X) return Direction.West;
+		if (from.Y < to.Y) return Direction.North;
+		if (from.Y > to.Y) return Direction.South;
 
 		throw new Exception();
 	}
@@ -92,11 +87,11 @@ internal class BreathFirstSearch
 
 internal class Position : IHeapElement
 {
-	public (int x, int y) Coordinate { get; }
+	public Coordinate Coordinate { get; }
 	public int Weight { get; }
 	public Position? Source { get; }
 
-	public Position((int x, int y) coordinate, int weight, Position? source = null)
+	public Position(Coordinate coordinate, int weight, Position? source = null)
 	{
 		Coordinate = coordinate;
 		Weight = weight;

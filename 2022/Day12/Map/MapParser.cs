@@ -1,13 +1,11 @@
-﻿using System.Linq;
+﻿using Helpers;
 
 namespace Day12.Maps;
 
 internal static class MapParser
 {
-	public static Map ParseMap(string s)
+	public static Map ParseMap(string[] lines)
 	{
-		string[] lines = s.Split('\n').Select(x => x.TrimEnd()).ToArray();
-
 		var X = lines[0].Length;
 		var Y = lines.Length;
 
@@ -34,7 +32,7 @@ internal static class MapParser
 		y++;
 	}
 
-	private static (int x, int y) FindPositionAndReplace(char target, char replacement, string[] map)
+	private static Coordinate FindPositionAndReplace(char target, char replacement, string[] map)
 	{
 		int y = 0;
 
@@ -48,7 +46,7 @@ internal static class MapParser
 
 			int x = map[y].IndexOf(target);
 			map[y] = map[y].Replace(target, replacement);
-			return (x, y);
+			return new(x, y);
 		}
 	}
 }
