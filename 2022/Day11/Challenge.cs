@@ -20,13 +20,14 @@ public class Challenge
 	[Test]
 	public void Part1_MainPuzzle()
 	{
-		Part1(PuzzleInput);
-		//result.Should().Be(12640);
+		var result = Part1(PuzzleInput);
+		result.Should().Be(78960);
 	}
 
 	private int Part1(IEnumerable<string> puzzleInput)
 	{
-		var monkeys = MonkeyListParser.Parse(puzzleInput);
+		var parser = MonkeyListParser.CreateParser();
+		var monkeys = parser.Parse(puzzleInput.ToList());
 		for(int i = 0; i < 20; i++)
 		{
 			foreach(var monkey in monkeys)
@@ -63,12 +64,14 @@ public class Challenge
 	[Test]
 	public void Part2_MainPuzzle()
 	{
-		Part2(PuzzleInput);
+		var result = Part2(PuzzleInput);
+		result.Should().Be(14561971968);
 	}
 
 	private long Part2(IEnumerable<string> puzzleInput)
 	{
-		var monkeys = MonkeyListParser.Parse(puzzleInput);
+		var parser = MonkeyListParser.CreateParser();
+		var monkeys = parser.Parse(puzzleInput.ToList());
 		var leastCommonMultiple = monkeys
 			.Select(x => x.DivisorTest)
 			.Aggregate(1, LeastCommonMultiple);

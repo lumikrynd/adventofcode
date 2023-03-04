@@ -2,31 +2,22 @@
 
 namespace Day11.Parsing;
 
-public class MonkeyParser
+public class MonkeyParser : IParser<List<string>, Monkey>
 {
-	public static Monkey Parse(List<string> input)
+	IParser<string, Func<long, long>> _expressionParser;
+	public MonkeyParser(IParser<string, Func<long, long>> expressionParser)
 	{
-		var parser = new MonkeyParser(input);
-		return parser.Parse();
+		_expressionParser = expressionParser;
 	}
 
-	private List<Item> items;
-	private Func<long, long> modifier;
-	private int divisor;
-	private int trueTarget;
-	private int falseTarget;
-
-	private MonkeyParser(List<string> input)
+	public Monkey Parse(List<string> input)
 	{
-		items = ParseItems(input[1]);
-		modifier = ParseModifier(input[2]);
-		divisor = ParseDivisor(input[3]);
-		trueTarget = ParseTarget(input[4]);
-		falseTarget = ParseTarget(input[5]);
-	}
+		var items = ParseItems(input[1]);
+		var modifier = ParseModifier(input[2]);
+		var divisor = ParseDivisor(input[3]);
+		var trueTarget = ParseTarget(input[4]);
+		var falseTarget = ParseTarget(input[5]);
 
-	public Monkey Parse()
-	{
 		return new Monkey(items, modifier, divisor, trueTarget, falseTarget);
 	}
 
@@ -64,6 +55,6 @@ public class MonkeyParser
 	{
 		const string start = "Operation: new = ";
 		string expression = input.RemoveStart(start);
-		return ExpressionParser.Parse(expression);
+		return _expressionParser.Parse(expression);
 	}
 }

@@ -2,28 +2,32 @@
 
 namespace Day11.Parsing;
 
-public class MonkeyListParser
+public class MonkeyListParser : IParser<List<string>, List<Monkey>>
 {
-	public static List<Monkey> Parse(IEnumerable<string> input)
+	public static MonkeyListParser CreateParser()
 	{
-		var parser = new MonkeyListParser(input.ToList());
-		return parser.Parse();
+		var expressionParser = new ExpressionParser();
+		var monkeyParser = new MonkeyParser(expressionParser);
+		return new MonkeyListParser(monkeyParser);
 	}
 
-	List<Monkey> MonkeyList = new();
+	IParser<List<string>, Monkey> _monkeyParser;
 
-	private MonkeyListParser(List<string> input)
+	public MonkeyListParser(IParser<List<string>, Monkey> monkeyParser)
 	{
+		_monkeyParser = monkeyParser;
+	}
+
+	public List<Monkey> Parse(List<string> input)
+	{
+		var monkeyList = new List<Monkey>();
 		var monkeyNotes = SplitInput(input);
 		foreach(var note in monkeyNotes)
 		{
-			AddMonkey(note);
+			var monkey = _monkeyParser.Parse(note);
+			monkeyList.Add(monkey);
 		}
-	}
-
-	public List<Monkey> Parse()
-	{
-		return MonkeyList;
+		return monkeyList;
 	}
 
 	private static IEnumerable<List<string>> SplitInput(List<string> input)
@@ -33,11 +37,5 @@ public class MonkeyListParser
 		{
 			yield return input.Skip(i).Take(noteLength).ToList();
 		}
-	}
-
-	private void AddMonkey(List<string> input)
-	{
-		var monkey = MonkeyParser.Parse(input);
-		MonkeyList.Add(monkey);
 	}
 }
