@@ -1,25 +1,4 @@
-﻿namespace Day15;
-
-internal partial class Program
-{
-	static readonly string Example =
-@"Sensor at x=2, y=18: closest beacon is at x=-2, y=15
-Sensor at x=9, y=16: closest beacon is at x=10, y=16
-Sensor at x=13, y=2: closest beacon is at x=15, y=3
-Sensor at x=12, y=14: closest beacon is at x=10, y=16
-Sensor at x=10, y=20: closest beacon is at x=10, y=16
-Sensor at x=14, y=17: closest beacon is at x=10, y=16
-Sensor at x=8, y=7: closest beacon is at x=2, y=10
-Sensor at x=2, y=0: closest beacon is at x=2, y=10
-Sensor at x=0, y=11: closest beacon is at x=2, y=10
-Sensor at x=20, y=14: closest beacon is at x=25, y=17
-Sensor at x=17, y=20: closest beacon is at x=21, y=22
-Sensor at x=16, y=7: closest beacon is at x=15, y=3
-Sensor at x=14, y=3: closest beacon is at x=15, y=3
-Sensor at x=20, y=1: closest beacon is at x=15, y=3";
-
-	static readonly string Input =
-@"Sensor at x=3889276, y=3176133: closest beacon is at x=3738780, y=3090050
+Sensor at x=3889276, y=3176133: closest beacon is at x=3738780, y=3090050
 Sensor at x=3545888, y=1389980: closest beacon is at x=3687798, y=2823020
 Sensor at x=2887269, y=2488344: closest beacon is at x=2809378, y=2513386
 Sensor at x=3990278, y=43134: closest beacon is at x=2307159, y=135337
@@ -56,5 +35,4 @@ Sensor at x=2389861, y=1856461: closest beacon is at x=2809378, y=2513386
 Sensor at x=2852352, y=2506253: closest beacon is at x=2809378, y=2513386
 Sensor at x=2275278, y=742411: closest beacon is at x=2307159, y=135337
 Sensor at x=1562183, y=3626443: closest beacon is at x=2294322, y=3429562
-Sensor at x=44398, y=534916: closest beacon is at x=278652, y=-182407";
-}
+Sensor at x=44398, y=534916: closest beacon is at x=278652, y=-182407
