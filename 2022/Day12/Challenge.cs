@@ -5,7 +5,7 @@ using Helpers;
 using NUnit.Framework;
 
 namespace Day12;
-internal partial class Challenge
+internal class Challenge
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
 	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");

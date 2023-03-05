@@ -35,10 +35,18 @@ public class Coordinate
 		return (To.X - X, To.Y - Y);
 	}
 
+	public Coordinate AddVector((int x, int y) vector)
+	{
+		var (x, y) = vector;
+		return new(X + x, Y + y);
+	}
+
 	public Coordinate Clone()
 	{
 		return new Coordinate(X, Y);
 	}
+
+	public static implicit operator (int, int)(Coordinate coord) => (coord.X, coord.Y);
 
 	public override string ToString()
 	{
