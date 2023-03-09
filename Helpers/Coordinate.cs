@@ -11,6 +11,10 @@ public class Coordinate
 		Y = y;
 	}
 
+	public Coordinate((int x, int y) tuple) : this(tuple.x, tuple.y)
+	{
+	}
+
 	/// <summary>
 	/// |X1 - X2| + |Y1 - Y2|
 	/// </summary>
@@ -33,6 +37,12 @@ public class Coordinate
 	public (int x, int y) GetVectorTo(Coordinate To)
 	{
 		return (To.X - X, To.Y - Y);
+	}
+
+	public Coordinate SubtractVector((int x, int y) vector)
+	{
+		var (x, y) = vector;
+		return AddVector((-x, -y));
 	}
 
 	public Coordinate AddVector((int x, int y) vector)

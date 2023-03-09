@@ -1,8 +1,9 @@
-﻿namespace Day15.Model;
+﻿using Helpers;
+
+namespace Day15.Model;
 
 internal interface INode
 {
-	int SideLengthPowerOfTwo { get; }
-	bool HasContent(int x, int y);
+	bool HasContent(Coordinate coordinate);
 	public INode Combine(INode other);
 }

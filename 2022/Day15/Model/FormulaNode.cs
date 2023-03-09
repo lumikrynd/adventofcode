@@ -1,4 +1,6 @@
-﻿namespace Day15.Model;
+﻿using Helpers;
+
+namespace Day15.Model;
 
 internal class FormulaNode : INode
 {
@@ -45,8 +47,9 @@ internal class FormulaNode : INode
 		throw new NotImplementedException();
 	}
 
-	public bool HasContent(int x, int y)
+	public bool HasContent(Coordinate coordinate)
 	{
+		(int x, int y) = ((int, int))coordinate;
 		return
 			B_PosA_Lower + x >= y ||
 			B_PosA_Upper + x <= y ||

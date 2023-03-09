@@ -1,6 +1,4 @@
-﻿using Day15.Model;
-using FluentAssertions;
-using Helpers;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace Day15;
