@@ -22,7 +22,7 @@ internal class SplitNode : INode
 	{
 		Quadrants = new INode[4];
 		for(int i = 0; i < 4; i++)
-			Quadrants[i] = UncoveredNode.Instance;
+			Quadrants[i] = UncoveredNode.GetNode(SideLength / 2);
 	}
 
 	public INode UpperLeft
@@ -63,7 +63,7 @@ internal class SplitNode : INode
 		};
 
 		if(Quadrants.All(q => q is CoveredNode))
-			return CoveredNode.Instance;
+			return CoveredNode.GetNode(SideLength);
 
 		return result;
 	}

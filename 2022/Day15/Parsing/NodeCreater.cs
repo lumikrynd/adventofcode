@@ -50,10 +50,10 @@ internal class NodeCreater
 		int upperLimit = DimmensionSize - 1;
 
 		if (SensorRadiusOutsideNode(upperLimit))
-			node = UncoveredNode.Instance;
+			node = UncoveredNode.GetNode(DimmensionSize);
 
 		if (SensorRadiusContainsNode(upperLimit))
-			node = CoveredNode.Instance;
+			node = CoveredNode.GetNode(DimmensionSize);
 
 		return node is not null;
 	}
@@ -71,7 +71,7 @@ internal class NodeCreater
 		return corners.All(c => c.ManhattenDistance(Sensor) <= Radius);
 	}
 
-	private Coordinate[] GetCorners(int upperLimit)
+	private static Coordinate[] GetCorners(int upperLimit)
 	{
 		return new Coordinate[]
 		{

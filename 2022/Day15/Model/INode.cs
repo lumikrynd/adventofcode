@@ -1,9 +1,6 @@
-﻿using Helpers;
+﻿namespace Day15.Model;
 
-namespace Day15.Model;
-
-internal interface INode
+internal interface INode :IMap
 {
-	bool HasContent(Coordinate coordinate);
 	public INode Combine(INode other);
 }

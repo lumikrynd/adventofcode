@@ -2,21 +2,21 @@
 
 namespace Day15.Model;
 
-internal class Map
+internal class Map : IMap
 {
 	private INode RootNode;
-	private Coordinate LowerCorner;
+	private (int, int) Displacement;
+	private static readonly Coordinate Zero = new Coordinate(0, 0);
 
 	public Map(INode rootNode, Coordinate lowerCorner)
 	{
 		RootNode = rootNode;
-		LowerCorner= lowerCorner;
+		Displacement = lowerCorner.GetVectorTo(Zero);
 	}
 
 	public bool HasContent(Coordinate coordinate)
 	{
-		(int xs, int ys) = ((int, int))LowerCorner;
-		var relativeCoordinate = coordinate.AddVector((-xs, -ys));
+		var relativeCoordinate = coordinate.AddVector(Displacement);
 		return RootNode.HasContent(relativeCoordinate);
 	}
 }

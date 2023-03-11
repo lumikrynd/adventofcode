@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Day15.Parsing;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Day15;
@@ -24,6 +25,8 @@ internal class Challenge
 
 	private int Part1(IEnumerable<string> input, int row)
 	{
+		var sensorResponses = SensorResponseParser.ParseInput(input);
+		var map = MapCreater.CreateMap(sensorResponses);
 		throw new NotImplementedException();
 	}
 

@@ -53,7 +53,7 @@ internal class MapCreater
 	private void CreateMap()
 	{
 		int dimmensionSize = DimensionsSize();
-		INode main = UncoveredNode.Instance;
+		INode main = UncoveredNode.GetNode(dimmensionSize);
 
 		foreach(var coord in Coordinates)
 		{

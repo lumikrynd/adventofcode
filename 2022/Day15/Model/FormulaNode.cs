@@ -4,7 +4,7 @@ namespace Day15.Model;
 
 internal class FormulaNode : INode
 {
-	public int SideLengthPowerOfTwo { get; }
+	public int SideLength { get; }
 
 	// f(x) = Ax + B
 	// Upper or lower for which part is Full
@@ -13,12 +13,12 @@ internal class FormulaNode : INode
 	public int? B_NegA_Upper { get; init; }
 	public int? B_NegA_Lower { get; init; }
 
-	public FormulaNode(int sideLengthPowerOfTwo)
+	public FormulaNode(int sideLength)
 	{
-		if (sideLengthPowerOfTwo < 1)
+		if (sideLength < 1)
 			throw new Exception();
 
-		SideLengthPowerOfTwo = sideLengthPowerOfTwo;
+		SideLength = sideLength;
 	}
 
 	public INode Combine(INode other)
@@ -29,7 +29,7 @@ internal class FormulaNode : INode
 		if (other is not FormulaNode otherForm)
 			return other.Combine(this);
 
-		return new FormulaNode(SideLengthPowerOfTwo)
+		return new FormulaNode(SideLength)
 		{
 			B_PosA_Upper = Min(B_PosA_Upper, otherForm.B_PosA_Upper),
 			B_NegA_Upper = Min(B_NegA_Upper, otherForm.B_NegA_Upper),
@@ -41,8 +41,7 @@ internal class FormulaNode : INode
 
 	private SplitNode Split()
 	{
-		var newPowerOfTwo = SideLengthPowerOfTwo - 1;
-		var newSideLength = 1 << newPowerOfTwo;
+		var newSideLength = SideLength / 2;
 
 		throw new NotImplementedException();
 	}

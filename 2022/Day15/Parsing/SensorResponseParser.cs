@@ -3,7 +3,7 @@ using Helpers;
 
 namespace Day15.Parsing;
 
-internal class Parser
+internal class SensorResponseParser
 {
 	public static List<SensorResponse> ParseInput(IEnumerable<string> input)
 	{
