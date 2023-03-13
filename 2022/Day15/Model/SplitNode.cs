@@ -87,6 +87,18 @@ internal class SplitNode : INode
 	public bool IsOutside(int xy) =>
 		xy < 0 || xy >= SideLength;
 
+	public int CountRowCowerage(int row)
+	{
+		int half = SideLength / 2;
+		int quadrantModifier = (row / half) * 2;
+
+		int newRelativeRow = row % half;
+		int sum = 0;
+		sum += Quadrants[quadrantModifier].CountRowCowerage(newRelativeRow);
+		sum += Quadrants[quadrantModifier + 1].CountRowCowerage(newRelativeRow);
+		return sum;
+	}
+
 	public enum Quadrant
 	{
 		UpperLeft = 0,

@@ -71,4 +71,9 @@ internal class FormulaNode : INode
 
 		return a > b ? a : b;
 	}
+
+	public int CountRowCowerage(int row)
+	{
+		throw new NotImplementedException();
+	}
 }

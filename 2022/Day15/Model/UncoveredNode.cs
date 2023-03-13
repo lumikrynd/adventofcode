@@ -31,4 +31,9 @@ internal class UncoveredNode : INode
 	{
 		return false;
 	}
+
+	public int CountRowCowerage(int row)
+	{
+		return 0;
+	}
 }

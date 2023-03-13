@@ -31,4 +31,9 @@ internal class CoveredNode : INode
 	{
 		return true;
 	}
+
+	public int CountRowCowerage(int row)
+	{
+		return Sidelength;
+	}
 }

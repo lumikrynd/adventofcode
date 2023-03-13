@@ -27,7 +27,9 @@ internal class Challenge
 	{
 		var sensorResponses = SensorResponseParser.ParseInput(input);
 		var map = MapCreater.CreateMap(sensorResponses);
-		throw new NotImplementedException();
+		var result = map.CountRowCowerage(row);
+		Console.WriteLine($"Covered lines: {result}");
+		return result;
 	}
 
 	[Test]
