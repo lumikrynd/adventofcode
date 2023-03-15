@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Helpers;
 
 namespace Day15.Model;
@@ -25,6 +26,20 @@ internal class Map : IMap
 	{
 		var relativeRow = row + Displacement.Ys;
 		return RootNode.CountRowCowerage(relativeRow);
+	}
+
+	public bool TryGetUncoveredSpot(Coordinate min, Coordinate max, [NotNullWhen(true)] out Coordinate? spot)
+	{
+		var relativeMin = min.AddVector(Displacement);
+		var relativeMax = max.AddVector(Displacement);
+		if(!RootNode.TryGetUncoveredSpot(relativeMin, relativeMax, out var relativeSpot))
+		{
+			spot = null;
+			return false;
+		}
+
+		spot = relativeSpot.SubtractVector(Displacement);
+		return true;
 	}
 
 	public string GetMapArea(Coordinate lower, Coordinate upper)

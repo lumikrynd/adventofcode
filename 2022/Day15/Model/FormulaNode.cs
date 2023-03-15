@@ -1,4 +1,5 @@
-﻿using Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
+using Helpers;
 
 namespace Day15.Model;
 
@@ -73,6 +74,11 @@ internal class FormulaNode : INode
 	}
 
 	public int CountRowCowerage(int row)
+	{
+		throw new NotImplementedException();
+	}
+
+	public bool TryGetUncoveredSpot(Coordinate min, Coordinate max, [NotNullWhen(true)] out Coordinate? spot)
 	{
 		throw new NotImplementedException();
 	}

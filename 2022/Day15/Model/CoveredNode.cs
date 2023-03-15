@@ -1,4 +1,5 @@
-﻿using Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
+using Helpers;
 
 namespace Day15.Model;
 
@@ -35,5 +36,11 @@ internal class CoveredNode : INode
 	public int CountRowCowerage(int row)
 	{
 		return Sidelength;
+	}
+
+	public bool TryGetUncoveredSpot(Coordinate min, Coordinate max, [NotNullWhen(true)] out Coordinate? spot)
+	{
+		spot = null;
+		return false;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Day15.Parsing;
+﻿using System.Diagnostics;
+using Day15.Parsing;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ internal class Challenge
 	public void Part1_MainPuzzle()
 	{
 		var result = Part1(PuzzleInput, 2000000);
-		//result.Should().Be(???);
+		result.Should().Be(4873353);
 	}
 
 	private int Part1(IEnumerable<string> input, int row)
@@ -51,12 +52,28 @@ internal class Challenge
 	[Test]
 	public void Part2_MainPuzzle()
 	{
+		var timer = new Stopwatch();
+		timer.Start();
+
 		var result = Part2(PuzzleInput, 0, 4000000);
-		//result.Should().Be(???);
+		result.Should().Be(11600823139120);
+
+		timer.Stop();
+		Console.WriteLine($"Time taken: {timer.Elapsed.TotalSeconds}");
 	}
 
-	private long Part2(IEnumerable<string> textMap, int min, int max)
+	private long Part2(IEnumerable<string> input, int min, int max)
 	{
-		throw new NotImplementedException();
+		var sensorResponses = SensorResponseParser.ParseInput(input);
+		var map = MapCreater.CreateMap(sensorResponses);
+
+		if(!map.TryGetUncoveredSpot(new(min, min), new(max, max), out var coordinate))
+			throw new NotImplementedException();
+
+		Console.WriteLine($"Found spot: {coordinate}");
+
+		long frequency = (long)coordinate.X * 4000000 + coordinate.Y;
+		Console.WriteLine($"Frequency: {frequency}");
+		return frequency;
 	}
 }
