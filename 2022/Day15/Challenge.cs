@@ -76,4 +76,21 @@ internal class Challenge
 		Console.WriteLine($"Frequency: {frequency}");
 		return frequency;
 	}
+
+	[Test]
+	public void PerformanceTest()
+	{
+		Stopwatch stopwatch = Stopwatch.StartNew();
+		BuildSensorWithFarthestReach();
+		stopwatch.Stop();
+		Console.WriteLine($"Seconds: {stopwatch.Elapsed.TotalSeconds}");
+	}
+
+	private void BuildSensorWithFarthestReach()
+	{
+		var sensorResponses = SensorResponseParser.ParseInput(PuzzleInput);
+		var maxSensor = sensorResponses.MaxBy(s => s.Sensor.ManhattenDistance(s.Beacon)) ?? throw new Exception();
+		var single = new List<SensorResponse> { maxSensor };
+		var map = MapCreater.CreateMap(single);
+	}
 }
