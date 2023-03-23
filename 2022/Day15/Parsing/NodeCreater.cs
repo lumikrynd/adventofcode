@@ -9,6 +9,7 @@ internal class NodeCreater
 	readonly Coordinate Sensor;
 	readonly int Radius;
 	readonly int DimmensionSize;
+	Coordinate[] Corners;
 
 	/// <param name="sensor">Coordinate relative to lower corner of generated node</param>
 	public NodeCreater(Coordinate sensor, int radius, int dimmensionSize)
@@ -16,6 +17,19 @@ internal class NodeCreater
 		Sensor = sensor;
 		Radius = radius;
 		DimmensionSize = dimmensionSize;
+		InitializeCorners(DimmensionSize - 1);
+	}
+
+	[MemberNotNull(nameof(Corners))]
+	private void InitializeCorners(int upperLimit)
+	{
+		Corners = new Coordinate[]
+		{
+			new(0, 0),
+			new(0, upperLimit),
+			new(upperLimit, 0),
+			new(upperLimit, upperLimit),
+		};
 	}
 
 	/// <param name="sensor">Coordinate relative to lower corner of generated node</param>
@@ -61,24 +75,11 @@ internal class NodeCreater
 	private bool SensorRadiusOutsideNode(int upperLimit)
 	{
 		var maxCornerDistance = (upperLimit * 2) + Radius;
-		var corners = GetCorners(upperLimit);
-		return corners.Any(c => c.ManhattenDistance(Sensor) > maxCornerDistance);
+		return Corners.Any(c => c.ManhattenDistance(Sensor) > maxCornerDistance);
 	}
 
 	private bool SensorRadiusContainsNode(int upperLimit)
 	{
-		var corners = GetCorners(upperLimit);
-		return corners.All(c => c.ManhattenDistance(Sensor) <= Radius);
-	}
-
-	private static Coordinate[] GetCorners(int upperLimit)
-	{
-		return new Coordinate[]
-		{
-			new(0, 0),
-			new(0, upperLimit),
-			new(upperLimit, 0),
-			new(upperLimit, upperLimit),
-		};
+		return Corners.All(c => c.ManhattenDistance(Sensor) <= Radius);
 	}
 }
