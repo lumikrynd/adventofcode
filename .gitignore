@@ -3,6 +3,7 @@
 
 **/[bB]in/**
 **/[dD]ebug/**
+**/[oO]bj/**
 
 !.gitignore
 !**.cs
