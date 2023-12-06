@@ -36,7 +36,7 @@ public class Challenge
 	private long Part1(IEnumerable<string> input)
 	{
 		var almanac = Parser.ParseAlmanac(input);
-		var converter = new LayeredConverter(almanac);
+		var converter = Converter.FromAlmanac(almanac);
 
 		var finalValues = almanac.Seeds
 			.Select(converter.Convert)
@@ -54,40 +54,50 @@ public class Challenge
 	}
 }
 
-public class LayeredConverter
-{
-	readonly List<Converter> Converters;
-	public LayeredConverter(Almanac almanac)
-	{
-		Converters = almanac.Conversions()
-			.Select(x => new Converter(x))
-			.ToList();
-	}
-
-	public long Convert(long value)
-	{
-		foreach(var c in Converters)
-		{
-			value = c.Convert(value);
-		}
-		return value;
-	}
-}
-
 public class Converter
 {
 	readonly Dictionary<long, Conversion> Conversions;
 	readonly long[] SortedSources;
+	readonly Converter? InnerConverter;
 
-	public Converter(List<Conversion> conversions)
+	public static Converter FromAlmanac(Almanac almanac)
+	{
+		var conversions = almanac.Conversions();
+		conversions.Reverse();
+
+		Converter? converter = null;
+		foreach(var conversion in conversions)
+		{
+			converter = new Converter(conversion, converter);
+		}
+
+		return converter ?? new(new());
+	}
+
+	public Converter(List<Conversion> conversions) : this(conversions, null)
+	{
+	}
+
+	private Converter(List<Conversion> conversions, Converter? innerConverter)
 	{
 		Conversions = conversions.ToDictionary(x => x.SourceStart);
+		InnerConverter = innerConverter;
+
 		var sources = conversions.Select(x => x.SourceStart).ToArray();
 		Array.Sort(sources);
 		SortedSources = sources;
 	}
 
 	public long Convert(long value)
+	{
+		var newValue = SingleConvert(value);
+		if(InnerConverter is null)
+			return newValue;
+
+		return InnerConverter.Convert(newValue);
+	}
+
+	private long SingleConvert(long value)
 	{
 		var index = Array.BinarySearch(SortedSources, value);
 		if(index < 0)
