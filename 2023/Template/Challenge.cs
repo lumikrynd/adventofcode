@@ -10,7 +10,8 @@ public class Challenge
 	[Test]
 	public void Part1_Example()
 	{
-		Part1(ExampleInput);
+		var result = Part1(ExampleInput);
+		Assert.That(result, Is.EqualTo(42));
 	}
 
 	[Test]
@@ -22,7 +23,8 @@ public class Challenge
 	[Test]
 	public void Part2_Example()
 	{
-		Part2(ExampleInput);
+		var result = Part2(ExampleInput);
+		Assert.That(result, Is.EqualTo(42));
 	}
 
 	[Test]
@@ -31,13 +33,21 @@ public class Challenge
 		Part2(PuzzleInput);
 	}
 
-	private void Part1(IEnumerable<string> input)
+	private long Part1(IEnumerable<string> input)
 	{
+		var model = Parser.Parse(input);
 		throw new NotImplementedException();
+
+		//Console.Write($"Result: {result}");
+		//return result;
 	}
 
-	private void Part2(IEnumerable<string> input)
+	private long Part2(IEnumerable<string> input)
 	{
+		var model = Parser.Parse(input);
 		throw new NotImplementedException();
+
+		//Console.Write($"Result: {result}");
+		//return result;
 	}
 }
