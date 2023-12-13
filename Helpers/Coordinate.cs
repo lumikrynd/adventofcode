@@ -79,4 +79,14 @@ public class Coordinate
 	{
 		return X == other.X && Y == other.Y;
 	}
+
+	public static bool operator ==(Coordinate coord1, Coordinate coord2)
+	{
+		return coord1.Equals(coord2);
+	}
+
+	public static bool operator !=(Coordinate coord1, Coordinate coord2)
+	{
+		return !coord1.Equals(coord2);
+	}
 }
