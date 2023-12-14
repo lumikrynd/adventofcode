@@ -38,7 +38,7 @@ public class Challenge
 		var model = Parser.Parse(input);
 		throw new NotImplementedException();
 
-		//Console.Write($"Result: {result}");
+		//Console.WriteLine($"Result: {result}");
 		//return result;
 	}
 
@@ -47,7 +47,7 @@ public class Challenge
 		var model = Parser.Parse(input);
 		throw new NotImplementedException();
 
-		//Console.Write($"Result: {result}");
+		//Console.WriteLine($"Result: {result}");
 		//return result;
 	}
 }
