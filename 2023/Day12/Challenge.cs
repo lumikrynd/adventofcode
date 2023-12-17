@@ -91,11 +91,21 @@ public class ArrangementsCounter
 
 	readonly Condition[] Conditions;
 	readonly int[] Groups;
+	readonly int[] RequiredSpace;
 
 	private ArrangementsCounter(Condition[] conditions, IEnumerable<int> groups)
 	{
 		Conditions = conditions;
 		Groups = groups.ToArray();
+		RequiredSpace = new int[Groups.Length];
+
+		int space = 0;
+		for(int i = Groups.Length - 1; i >= 0; i--)
+		{
+			space += Groups[i];
+			RequiredSpace[i] = space;
+			space += 1;
+		}
 	}
 
 	public long Count()
@@ -111,7 +121,7 @@ public class ArrangementsCounter
 		long sum = 0;
 		var groupValue = Groups[group];
 
-		for(int i = 0; (i + groupValue - 1) < conditions.Count; i++)
+		for(int i = 0; (i + RequiredSpace[group] - 1) < conditions.Count; i++)
 		{
 			if(CouldBeSpring(conditions, i, groupValue))
 			{
