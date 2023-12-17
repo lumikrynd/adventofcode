@@ -90,33 +90,33 @@ public class ArrangementsCounter
 	}
 
 	Condition[] Conditions;
-	List<int> Groups;
+	int[] Groups;
 
-	private ArrangementsCounter(Condition[] conditions, List<int> groups)
+	private ArrangementsCounter(Condition[] conditions, IEnumerable<int> groups)
 	{
 		Conditions = conditions;
-		Groups = groups;
+		Groups = groups.ToArray();
 	}
 
 	public long Count()
 	{
-		var groups = new LinkedList<int>(Groups);
-		return CountArrangements(groups.First, new ArraySegment<Condition>(Conditions));
+		return CountArrangements(0, new ArraySegment<Condition>(Conditions));
 	}
 
-	private long CountArrangements(LinkedListNode<int>? group, ArraySegment<Condition> conditions)
+	private long CountArrangements(int group, ArraySegment<Condition> conditions)
 	{
-		if(group is null)
+		if(group == Groups.Length)
 			return CouldBeEmpty(conditions) ? 1 : 0;
 
 		long sum = 0;
+		var groupValue = Groups[group];
 
-		for(int i = 0; (i + group.Value - 1) < conditions.Count; i++)
+		for(int i = 0; (i + groupValue - 1) < conditions.Count; i++)
 		{
-			if(CouldBeSpring(conditions, i, group.Value))
+			if(CouldBeSpring(conditions, i, groupValue))
 			{
-				var remainingConditions = NextArraySegment(conditions, i, group.Value);
-				sum += CountArrangements(group.Next, remainingConditions);
+				var remainingConditions = NextArraySegment(conditions, i, groupValue);
+				sum += CountArrangements(group + 1, remainingConditions);
 			}
 		}
 
