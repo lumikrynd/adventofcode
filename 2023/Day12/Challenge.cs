@@ -37,27 +37,23 @@ public class Challenge
 	private long Part1(IEnumerable<string> input)
 	{
 		var infos = Parser.Parse(input);
-
-		long sum = 0;
-		foreach(var info in infos)
-		{
-			sum += CountArrangements(info);
-			Console.WriteLine(sum);
-		}
-
-		Console.WriteLine($"Result: {sum}");
-		return sum;
+		return CountAllArrangements(infos);
 	}
 
 	private long Part2(IEnumerable<string> input)
 	{
 		var model = Parser.Parse(input);
 		var unfolded = model.Select(Unfold).ToList();
+		return CountAllArrangements(unfolded);
+	}
 
+	private static long CountAllArrangements(List<SpringInfo> infos)
+	{
 		long sum = 0;
-		foreach(var info in unfolded)
+		foreach(var info in infos)
 		{
-			sum += CountArrangements(info);
+			sum += ArrangementsCounter.CountArrangements(info);
+			Console.WriteLine(sum);
 		}
 
 		Console.WriteLine($"Result: {sum}");
@@ -83,13 +79,29 @@ public class Challenge
 			Conditions = newConditions.ToArray(),
 		};
 	}
+}
 
-	private long CountArrangements(SpringInfo info)
+public class ArrangementsCounter
+{
+	public static long CountArrangements(SpringInfo info)
 	{
-		var groups = new LinkedList<int>(info.SpringGroups);
-		var conditions = info.Conditions;
+		var counter = new ArrangementsCounter(info.Conditions, info.SpringGroups);
+		return counter.Count();
+	}
 
-		return CountArrangements(groups.First, new ArraySegment<Condition>(conditions));
+	Condition[] Conditions;
+	List<int> Groups;
+
+	private ArrangementsCounter(Condition[] conditions, List<int> groups)
+	{
+		Conditions = conditions;
+		Groups = groups;
+	}
+
+	public long Count()
+	{
+		var groups = new LinkedList<int>(Groups);
+		return CountArrangements(groups.First, new ArraySegment<Condition>(Conditions));
 	}
 
 	private long CountArrangements(LinkedListNode<int>? group, ArraySegment<Condition> conditions)
