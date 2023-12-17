@@ -118,6 +118,9 @@ public class ArrangementsCounter
 				var remainingConditions = NextArraySegment(conditions, i, groupValue);
 				sum += CountArrangements(group + 1, remainingConditions);
 			}
+
+			if(conditions[i] == Condition.Spring)
+				break;
 		}
 
 		return sum;
@@ -139,11 +142,6 @@ public class ArrangementsCounter
 		if(list.Count < index + length)
 			return false;
 
-		for(int i = 0; i < index; i++)
-		{
-			if(list[i] == Condition.Spring)
-				return false;
-		}
 		if(IsSpring(list, index + length))
 			return false;
 
