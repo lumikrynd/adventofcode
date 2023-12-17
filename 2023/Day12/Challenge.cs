@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using Y2023.Day12.Models;
 
+using PreIndex = (int condition, int group);
+
 namespace Y2023.Day12;
 
 public class Challenge
@@ -53,7 +55,6 @@ public class Challenge
 		foreach(var info in infos)
 		{
 			sum += ArrangementsCounter.CountArrangements(info);
-			Console.WriteLine(sum);
 		}
 
 		Console.WriteLine($"Result: {sum}");
@@ -93,6 +94,8 @@ public class ArrangementsCounter
 	readonly int[] Groups;
 	readonly int[] RequiredSpace;
 
+	readonly Dictionary<PreIndex, long> PreCalculated = new();
+
 	private ArrangementsCounter(Condition[] conditions, IEnumerable<int> groups)
 	{
 		Conditions = conditions;
@@ -118,19 +121,36 @@ public class ArrangementsCounter
 		if(group == Groups.Length)
 			return RemainingCouldBeEmpty(startIndex) ? 1 : 0;
 
-		long sum = 0;
+		List<long> sums = new();
 		var groupValue = Groups[group];
 
 		for(int i = startIndex; (i + RequiredSpace[group] - 1) < Conditions.Length; i++)
 		{
+			long count;
+
+			if(PreCalculated.TryGetValue((i, group), out count))
+			{
+				sums.Add(count);
+				break;
+			}
+
 			if(CouldBeSpring(i, groupValue))
 			{
 				var nextIndex = i + groupValue + 1;
-				sum += CountArrangements(nextIndex, group + 1);
+				count = CountArrangements(nextIndex, group + 1);
 			}
+			sums.Add(count);
 
 			if(Conditions[i] == Condition.Spring)
 				break;
+		}
+
+		long sum = 0;
+		for(int i = sums.Count - 1; i >= 0; i--)
+		{
+			sum += sums[i];
+			int sIndex = startIndex + i;
+			PreCalculated[(sIndex, group)] = sum;
 		}
 
 		return sum;
