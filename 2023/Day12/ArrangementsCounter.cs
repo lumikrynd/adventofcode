@@ -37,42 +37,31 @@ public class ArrangementsCounter
 		return CountArrangements(0, 0);
 	}
 
-	private long CountArrangements(int startIndex, int group)
+	private long CountArrangements(int index, int group)
+	{
+		var preIndex = (index, group);
+		if(!PreCalculated.TryGetValue(preIndex, out var result))
+			PreCalculated[preIndex] = result = CountArrangementsCalculation(index, group);
+		return result;
+	}
+
+	private long CountArrangementsCalculation(int index, int group)
 	{
 		if(group == Groups.Length)
-			return RemainingCouldBeEmpty(startIndex) ? 1 : 0;
+			return RemainingCouldBeEmpty(index) ? 1 : 0;
 
-		List<long> sums = new();
-		var groupValue = Groups[group];
-
-		for(int i = startIndex; (i + RequiredSpace[group] - 1) < Conditions.Length; i++)
-		{
-			long count;
-
-			if(PreCalculated.TryGetValue((i, group), out count))
-			{
-				sums.Add(count);
-				break;
-			}
-
-			if(CouldBeSpring(i, groupValue))
-			{
-				var nextIndex = i + groupValue + 1;
-				count = CountArrangements(nextIndex, group + 1);
-			}
-			sums.Add(count);
-
-			if(Conditions[i] == Condition.Spring)
-				break;
-		}
+		if(index + RequiredSpace[group] > Conditions.Length)
+			return 0;
 
 		long sum = 0;
-		for(int i = sums.Count - 1; i >= 0; i--)
-		{
-			sum += sums[i];
-			int sIndex = startIndex + i;
-			PreCalculated[(sIndex, group)] = sum;
-		}
+		var groupValue = Groups[group];
+		var nextIndex = index + groupValue + 1;
+
+		if(CouldBeSpring(index, groupValue))
+			sum += CountArrangements(nextIndex, group + 1);
+
+		if(CouldBeEmpty(Conditions[index]))
+			sum += CountArrangements(index + 1, group);
 
 		return sum;
 	}
