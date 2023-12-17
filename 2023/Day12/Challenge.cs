@@ -34,13 +34,13 @@ public class Challenge
 		Part2(PuzzleInput);
 	}
 
-	private long Part1(IEnumerable<string> input)
+	private static long Part1(IEnumerable<string> input)
 	{
 		var infos = Parser.Parse(input);
 		return CountAllArrangements(infos);
 	}
 
-	private long Part2(IEnumerable<string> input)
+	private static long Part2(IEnumerable<string> input)
 	{
 		var model = Parser.Parse(input);
 		var unfolded = model.Select(Unfold).ToList();
@@ -60,7 +60,7 @@ public class Challenge
 		return sum;
 	}
 
-	private SpringInfo Unfold(SpringInfo info)
+	private static SpringInfo Unfold(SpringInfo info)
 	{
 		var newGroups = Enumerable.Repeat(info.SpringGroups, 5)
 			.SelectMany(x => x)
@@ -89,8 +89,8 @@ public class ArrangementsCounter
 		return counter.Count();
 	}
 
-	Condition[] Conditions;
-	int[] Groups;
+	readonly Condition[] Conditions;
+	readonly int[] Groups;
 
 	private ArrangementsCounter(Condition[] conditions, IEnumerable<int> groups)
 	{
@@ -123,7 +123,7 @@ public class ArrangementsCounter
 		return sum;
 	}
 
-	ArraySegment<Condition> NextArraySegment(ArraySegment<Condition> previous, int index, int length)
+	private static ArraySegment<Condition> NextArraySegment(ArraySegment<Condition> previous, int index, int length)
 	{
 		var array = previous.Array!;
 		var newOffset = previous.Offset + index + length + 1;
@@ -134,7 +134,7 @@ public class ArrangementsCounter
 		return new ArraySegment<Condition>(array, newOffset, newCount);
 	}
 
-	private bool CouldBeSpring(IList<Condition> list, int index, int length)
+	private static bool CouldBeSpring(IList<Condition> list, int index, int length)
 	{
 		if(list.Count < index + length)
 			return false;
@@ -151,14 +151,14 @@ public class ArrangementsCounter
 			.All(i => CouldBeSpring(list[i]));
 	}
 
-	private bool CouldBeEmpty(IList<Condition> list)
+	private static bool CouldBeEmpty(IList<Condition> list)
 	{
 		return list.All(CouldBeEmpty);
 	}
 
-	private bool IsSpring(IList<Condition> list, int index) =>
+	private static bool IsSpring(IList<Condition> list, int index) =>
 		index >= 0 && index < list.Count && list[index] == Condition.Spring;
 
-	private bool CouldBeSpring(Condition condition) => condition != Condition.Empty;
-	private bool CouldBeEmpty(Condition condition) => condition != Condition.Spring;
+	private static bool CouldBeSpring(Condition condition) => condition != Condition.Empty;
+	private static bool CouldBeEmpty(Condition condition) => condition != Condition.Spring;
 }
