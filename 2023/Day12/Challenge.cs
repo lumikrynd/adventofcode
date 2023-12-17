@@ -110,62 +110,46 @@ public class ArrangementsCounter
 
 	public long Count()
 	{
-		return CountArrangements(0, new ArraySegment<Condition>(Conditions));
+		return CountArrangements(0, 0);
 	}
 
-	private long CountArrangements(int group, ArraySegment<Condition> conditions)
+	private long CountArrangements(int startIndex, int group)
 	{
 		if(group == Groups.Length)
-			return CouldBeEmpty(conditions) ? 1 : 0;
+			return RemainingCouldBeEmpty(startIndex) ? 1 : 0;
 
 		long sum = 0;
 		var groupValue = Groups[group];
 
-		for(int i = 0; (i + RequiredSpace[group] - 1) < conditions.Count; i++)
+		for(int i = startIndex; (i + RequiredSpace[group] - 1) < Conditions.Length; i++)
 		{
-			if(CouldBeSpring(conditions, i, groupValue))
+			if(CouldBeSpring(i, groupValue))
 			{
-				var remainingConditions = NextArraySegment(conditions, i, groupValue);
-				sum += CountArrangements(group + 1, remainingConditions);
+				var nextIndex = i + groupValue + 1;
+				sum += CountArrangements(nextIndex, group + 1);
 			}
 
-			if(conditions[i] == Condition.Spring)
+			if(Conditions[i] == Condition.Spring)
 				break;
 		}
 
 		return sum;
 	}
 
-	private static ArraySegment<Condition> NextArraySegment(ArraySegment<Condition> previous, int index, int length)
+	private bool CouldBeSpring(int index, int length)
 	{
-		var array = previous.Array!;
-		var newOffset = previous.Offset + index + length + 1;
-		var newCount = array.Length - newOffset;
-		if(newCount < 1)
-			return ArraySegment<Condition>.Empty;
-
-		return new ArraySegment<Condition>(array, newOffset, newCount);
-	}
-
-	private static bool CouldBeSpring(IList<Condition> list, int index, int length)
-	{
-		if(list.Count < index + length)
-			return false;
-
-		if(IsSpring(list, index + length))
+		if(IsSpring(index + length))
 			return false;
 
 		return Enumerable.Range(index, length)
-			.All(i => CouldBeSpring(list[i]));
+			.All(i => CouldBeSpring(Conditions[i]));
 	}
 
-	private static bool CouldBeEmpty(IList<Condition> list)
-	{
-		return list.All(CouldBeEmpty);
-	}
+	private bool RemainingCouldBeEmpty(int index) =>
+		Conditions.Skip(index).All(CouldBeEmpty);
 
-	private static bool IsSpring(IList<Condition> list, int index) =>
-		index >= 0 && index < list.Count && list[index] == Condition.Spring;
+	private bool IsSpring(int index) =>
+		index >= 0 && index < Conditions.Length && Conditions[index] == Condition.Spring;
 
 	private static bool CouldBeSpring(Condition condition) => condition != Condition.Empty;
 	private static bool CouldBeEmpty(Condition condition) => condition != Condition.Spring;
