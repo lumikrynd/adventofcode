@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Y2023.Day12.Models;
 
-using PreIndex = (int condition, int group);
-
 namespace Y2023.Day12;
 
 public class ArrangementsCounter
@@ -17,7 +15,7 @@ public class ArrangementsCounter
 	readonly int[] Groups;
 	readonly int[] RequiredSpace;
 
-	readonly Dictionary<PreIndex, long> PreCalculated = new();
+	readonly Dictionary<(int, int), long> PreCalculated = new();
 
 	private ArrangementsCounter(Condition[] conditions, IEnumerable<int> groups)
 	{
