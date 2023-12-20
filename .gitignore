@@ -12,5 +12,7 @@
 !**.csproj
 !**.sln
 !**.slnf
+!/*.props
 
 !**.txt
+
