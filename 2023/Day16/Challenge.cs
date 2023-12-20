@@ -55,29 +55,28 @@ public class Challenge
 			.ToDictionary(m => m.Location);
 
 		int max = 0;
-		for(int x = 0; x <= map.Width; x++)
+		foreach(var beamConfig in BeamConfigurations(map))
 		{
-			var count = CountHitFields(map, mirrors, new(new(x, -1), Direction.South));
-			max = Math.Max(max, count);
-		}
-		for(int x = 0; x <= map.Width; x++)
-		{
-			var count = CountHitFields(map, mirrors, new(new(x, map.Height), Direction.North));
-			max = Math.Max(max, count);
-		}
-		for(int y = 0; y <= map.Height; y++)
-		{
-			var count = CountHitFields(map, mirrors, new(new(-1, y), Direction.East));
-			max = Math.Max(max, count);
-		}
-		for(int y = 0; y <= map.Height; y++)
-		{
-			var count = CountHitFields(map, mirrors, new(new(map.Width, y), Direction.West));
+			var count = CountHitFields(map, mirrors, beamConfig);
 			max = Math.Max(max, count);
 		}
 
 		Console.WriteLine($"Result: {max}");
 		return max;
+	}
+
+	private IEnumerable<Vector> BeamConfigurations(Map map)
+	{
+		for(int x = 0; x <= map.Width; x++)
+		{
+			yield return new(new(x, -1), Direction.South);
+			yield return new(new(x, map.Height), Direction.North);
+		}
+		for(int y = 0; y <= map.Height; y++)
+		{
+			yield return new(new(-1, y), Direction.East);
+			yield return new(new(map.Width, y), Direction.West);
+		}
 	}
 
 	private int CountHitFields(Map map, Dictionary<Coordinate, Mirror> mirrors, Vector start)
