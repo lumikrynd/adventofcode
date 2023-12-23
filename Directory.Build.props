@@ -2,4 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;IDE0017</NoWarn>
+  </PropertyGroup>
 </Project>
