@@ -1,8 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Helpers;
 
-public class EnumeratorWrapper<T> where T : notnull
+public class EnumeratorWrapper<T> : IDisposable
+	where T : notnull
 {
 	private IEnumerator<T> Enumerator { get; }
 
@@ -60,5 +61,10 @@ public class EnumeratorWrapper<T> where T : notnull
 		Current = next;
 		Enumerator.MoveNext();
 		next = Enumerator.Current;
+	}
+
+	public void Dispose()
+	{
+		Enumerator.Dispose();
 	}
 }

@@ -3,11 +3,11 @@ using Y2023.Day16.Models;
 
 namespace Y2023.Day16;
 
-public class Parser
+public class Parser : IDisposable
 {
 	public static Map Parse(IEnumerable<string> input)
 	{
-		var parser = new Parser(input);
+		using var parser = new Parser(input);
 		parser.Parse();
 		return parser.CreateMap();
 	}
@@ -17,7 +17,7 @@ public class Parser
 		return new(Mirrors, Width, Y);
 	}
 
-	private List<Mirror> Mirrors= new();
+	private List<Mirror> Mirrors = new();
 
 	private EnumeratorWrapper<string> Input;
 	int Y = 0;
@@ -58,4 +58,9 @@ public class Parser
 		'/' => MirrorType.Anti,
 		_ => throw new NotImplementedException(),
 	};
+
+	public void Dispose()
+	{
+		Input.Dispose();
+	}
 }

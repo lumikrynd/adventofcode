@@ -3,11 +3,11 @@ using Y2023.Day14.Models;
 
 namespace Y2023.Day14;
 
-public class Parser
+public class Parser : IDisposable
 {
 	public static ParsedInput Parse(IEnumerable<string> input)
 	{
-		var parser = new Parser(input);
+		using var parser = new Parser(input);
 		parser.ParseStones();
 		return parser.ToRockPositions();
 	}
@@ -64,5 +64,10 @@ public class Parser
 			Height = Y,
 			Width = Width,
 		};
+	}
+
+	public void Dispose()
+	{
+		Input.Dispose();
 	}
 }

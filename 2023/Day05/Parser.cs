@@ -1,13 +1,13 @@
-﻿using Helpers;
+using Helpers;
 using Y2023.Day05.Models;
 
 namespace Y2023.Day05;
 
-public class Parser
+public class Parser : IDisposable
 {
 	public static Almanac ParseAlmanac(IEnumerable<string> lines)
 	{
-		var parser = new Parser(lines);
+		using var parser = new Parser(lines);
 		parser.Parse();
 		return parser.Result();
 	}
@@ -93,7 +93,7 @@ public class Parser
 
 	private string? NullablePeek()
 	{
-		return Lines.TryPeek(out string ? result) ? result : null;
+		return Lines.TryPeek(out string? result) ? result : null;
 	}
 
 	private void SkipToNextSection()
@@ -110,5 +110,10 @@ public class Parser
 			.Split(' ', splitOptions)
 			.Select(long.Parse)
 			.ToList();
+	}
+
+	public void Dispose()
+	{
+		Lines.Dispose();
 	}
 }

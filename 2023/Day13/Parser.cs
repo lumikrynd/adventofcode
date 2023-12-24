@@ -1,15 +1,14 @@
-﻿using Helpers;
-using Y2023.Day13.Models;
+using Helpers;
 
 namespace Y2023.Day13;
 
-public class Parser
+public class Parser : IDisposable
 {
 	private static readonly StringSplitOptions splitOptions = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
 
 	public static List<char[,]> Parse(IEnumerable<string> input)
 	{
-		var parser = new Parser(input);
+		using var parser = new Parser(input);
 		parser.Parse();
 		return parser.Patterns;
 	}
@@ -59,5 +58,10 @@ public class Parser
 		}
 
 		return arr;
+	}
+
+	public void Dispose()
+	{
+		Input.Dispose();
 	}
 }
