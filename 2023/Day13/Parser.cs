@@ -4,8 +4,6 @@ namespace Y2023.Day13;
 
 public class Parser : IDisposable
 {
-	private static readonly StringSplitOptions splitOptions = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
-
 	public static List<char[,]> Parse(IEnumerable<string> input)
 	{
 		using var parser = new Parser(input);
@@ -18,7 +16,7 @@ public class Parser : IDisposable
 
 	private Parser(IEnumerable<string> input)
 	{
-		Input = new(input);
+		Input = EnumeratorWrapper<string>.WithInitializedCurrent(input);
 	}
 
 	public void Parse()

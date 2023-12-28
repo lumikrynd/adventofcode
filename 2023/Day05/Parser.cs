@@ -25,7 +25,7 @@ public class Parser : IDisposable
 
 	private Parser(IEnumerable<string> lines)
 	{
-		Lines = new(lines.GetEnumerator());
+		Lines = EnumeratorWrapper<string>.WithInitializedCurrent(lines);
 	}
 
 	public Almanac Result()

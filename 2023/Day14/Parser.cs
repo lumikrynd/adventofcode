@@ -21,7 +21,7 @@ public class Parser : IDisposable
 
 	private Parser(IEnumerable<string> input)
 	{
-		Input = new(input);
+		Input = EnumeratorWrapper<string>.WithInitializedCurrent(input);
 		Width = Input.Current.Length;
 	}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Day07.Model.Commands;
 using Day07.Model.FileSystem;
@@ -19,7 +19,7 @@ public class TerminalParser
 
 	public TerminalParser(IEnumerable<string> input)
 	{
-		Input = new(input);
+		Input = EnumeratorWrapper<string>.WithInitializedCurrent(input);
 	}
 
 	public List<ICommand> Parse()

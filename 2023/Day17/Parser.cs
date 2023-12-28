@@ -2,8 +2,6 @@ namespace Y2023.Day17;
 
 public class Parser
 {
-	private static readonly StringSplitOptions splitOptions = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
-
 	public static int[,] Parse(IEnumerable<string> lines)
 	{
 		var parsedLines = lines.Select(ParseLine).ToList();
