@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Y2023.Day19.Models;
 
 namespace Y2023.Day19;
 
@@ -24,7 +25,7 @@ public class Challenge
 	public void Part2_Example()
 	{
 		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(42));
+		Assert.That(result, Is.EqualTo(167409079868000));
 	}
 
 	[Test]
@@ -49,9 +50,19 @@ public class Challenge
 	private long Part2(IEnumerable<string> input)
 	{
 		var model = Parser.Parse(input);
-		throw new NotImplementedException();
+		var range = new CatRange(1, 4000);
+		var partRange = new PartRange(range, range, range, range);
 
-		//Console.WriteLine($"Result: {result}");
-		//return result;
+		var calculator = new PreCalculator(model.Workflows);
+		var accepted = calculator.CalculateAccepted(partRange);
+
+		long count = 0;
+		foreach(var pr in accepted)
+		{
+			count += pr.Combinations;
+		}
+
+		Console.WriteLine($"Result: {count}");
+		return count;
 	}
 }
