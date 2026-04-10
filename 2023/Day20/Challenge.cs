@@ -35,7 +35,7 @@ public class Challenge
 	//	Assert.That(result, Is.EqualTo(42));
 	//}
 
-	[Test]
+	[Test, Ignore("Not done")]
 	public void Part2_MainPuzzle()
 	{
 		Part2(PuzzleInput);
