@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace Day03;
 
 internal class BackpackerGroupParser

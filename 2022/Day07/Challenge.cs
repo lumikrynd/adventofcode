@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Day07.Model.Commands;
 using Day07.Model.FileSystem;
 using Day07.Parser;

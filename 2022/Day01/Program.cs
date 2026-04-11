@@ -1,6 +1,3 @@
-﻿using System;
-using System.Linq;
-
 namespace Day1;
 
 internal partial class Program

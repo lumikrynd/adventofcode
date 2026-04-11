@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Day07.Model.Commands;
 using Day07.Model.FileSystem;
 using Helpers;
+using Directory = Day07.Model.FileSystem.Directory;
+using File = Day07.Model.FileSystem.File;
 
 namespace Day07.Parser;
 

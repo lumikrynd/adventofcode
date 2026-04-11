@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace Day08;
 
 public class TreeCordinate

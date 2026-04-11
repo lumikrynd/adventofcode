@@ -1,4 +1,3 @@
-﻿using System.Numerics;
 using Day04.Models;
 
 namespace Day04;

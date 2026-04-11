@@ -1,6 +1,3 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Y2023.Day07.Models;
-
 namespace Y2023.Day07;
 
 public class GameJokerComparer : GameComparer
@@ -28,4 +25,3 @@ public class GameJokerComparer : GameComparer
 		var n => base.CardToValue(n),
 	};
 }
-

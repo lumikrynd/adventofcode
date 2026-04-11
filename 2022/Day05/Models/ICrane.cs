@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace Day05.Models;
 
 internal interface ICrane

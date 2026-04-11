@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Day05.Models;
 using FluentAssertions;
 using NUnit.Framework;

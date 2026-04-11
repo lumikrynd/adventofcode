@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace Y2023.Day20.Models;
 
 public record Module(string Name, ModuleType Type, List<string> Destinations);
