@@ -1,40 +1,8 @@
-using NUnit.Framework;
-
 namespace Y2023.Day01;
 
-public class Challenge
+public class Challenge(IEnumerable<string> input)
 {
-	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> Example2Input => File.ReadLines(@"Input/Example2.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
-
-	[Test]
-	public void Part1_Example()
-	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(142));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
-	}
-
-	[Test]
-	public void Part2_Example()
-	{
-		var result = Part2(Example2Input);
-		Assert.That(result, Is.EqualTo(281));
-	}
-
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private int Part1(IEnumerable<string> input)
+	public string Part1()
 	{
 		var sum = 0;
 		foreach(var line in input)
@@ -45,11 +13,10 @@ public class Challenge
 			sum += int.Parse(number);
 		}
 
-		Console.WriteLine($"Result: {sum}");
-		return sum;
+		return sum.ToString();
 	}
 
-	private int Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var sum = 0;
 		foreach(var line in input)
@@ -60,8 +27,7 @@ public class Challenge
 			sum += int.Parse(number);
 		}
 
-		Console.WriteLine($"Result: {sum}");
-		return sum;
+		return sum.ToString();
 	}
 
 	char FirstDigit(string input)
