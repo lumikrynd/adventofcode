@@ -1,4 +1,4 @@
-﻿namespace Day1;
+namespace Y2022.Day01;
 
 internal partial class Program
 {

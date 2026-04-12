@@ -1,8 +1,8 @@
-namespace Day1;
+namespace Y2022.Day01;
 
 internal class Parser
 {
-	public static List<List<int>> ParseInput(string input)
+	public static List<List<int>> ParseInput(IEnumerable<string> input)
 	{
 		var parser = new Parser(input);
 		parser.ProvisionElfs();
@@ -12,9 +12,9 @@ internal class Parser
 	private readonly IEnumerator<string> Input;
 	private readonly List<List<int>> Elves = new();
 
-	private Parser(string input)
+	private Parser(IEnumerable<string> input)
 	{
-		Input = input.Split("\n").Select(s => s.Trim()).GetEnumerator();
+		Input = input.Select(s => s.Trim()).GetEnumerator();
 		Input.MoveNext();
 		Elves = new();
 	}

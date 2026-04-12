@@ -1,37 +1,29 @@
-namespace Day1;
+using Helpers;
+
+namespace Y2022.Day01;
 
 internal partial class Program
 {
 	static void Main(string[] args)
 	{
-		Part1(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part1(Input);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Input);
+		var example = new Challenge(Example.Split('\n'));
+		Console.WriteLine(example.Part1());
+		Console.WriteLine(example.Part2());
 	}
+}
 
-	private static void Part1(string input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var elfs = Parser.ParseInput(input);
 
 		var maxTotal = elfs.Max(s => s.Sum());
 
-		Console.Write($"Sum: {maxTotal}");
+		return $"Sum: {maxTotal}";
 	}
 
-	private static void Part2(string input)
+	public string Part2()
 	{
 		var elfs = Parser.ParseInput(input);
 
@@ -39,6 +31,6 @@ internal partial class Program
 
 		var sum = ordered.Take(3).Sum(elf => elf.Sum());
 
-		Console.Write($"Sum: {sum}");
+		return $"Sum: {sum}";
 	}
 }
