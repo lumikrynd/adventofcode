@@ -5,9 +5,11 @@
 **/[bB]in/**
 **/[dD]ebug/**
 **/[oO]bj/**
+/Input/
 
 !.gitignore
 !.editorconfig
+!README.md
 !**.cs
 !**.csproj
 !**.sln
