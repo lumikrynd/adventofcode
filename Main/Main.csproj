@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
     <ProjectReference Include="..\2023\Day01\Day01.csproj" />
+    <ProjectReference Include="..\2022\Day01\Day01.csproj" />
   </ItemGroup>
 
 </Project>

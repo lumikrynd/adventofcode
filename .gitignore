@@ -1,10 +1,10 @@
 *
 !**/
 
-**/.vs/**
-**/[bB]in/**
-**/[dD]ebug/**
-**/[oO]bj/**
+**/.vs/
+**/[bB]in/
+**/[dD]ebug/
+**/[oO]bj/
 /Input/
 
 !.gitignore
@@ -15,6 +15,6 @@
 !**.sln
 !**.slnx
 !**.slnf
-!/*.props
+!**.props
 
 !**.txt
