@@ -1,6 +1,8 @@
+using Helpers;
+
 namespace Y2023.Day01;
 
-public class Challenge(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
 {
 	public string Part1()
 	{

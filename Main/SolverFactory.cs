@@ -10,7 +10,27 @@ internal static class SolverFactory
 		int day,
 		[MaybeNullWhen(false)] out Func<IEnumerable<string>, ISolver> factory)
 	{
-		factory = null;
-		return false;
+		switch (year) {
+			case 2023:
+				return Y2023(day, out factory);
+			default:
+				factory = null;
+				return false;
+		}
+	}
+
+	private static bool Y2023(
+		int day,
+		[MaybeNullWhen(false)] out Func<IEnumerable<string>, ISolver> factory) {
+		switch (day) {
+			case 1:
+				factory = x => new Y2023.Day01.Challenge(x);
+				break;
+			default:
+				factory = null;
+				return false;
+		}
+
+		return true;
 	}
 }
