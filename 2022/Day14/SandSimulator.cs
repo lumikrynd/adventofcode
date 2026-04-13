@@ -1,7 +1,7 @@
-﻿using Day14.Model;
+using Y2022.Day14.Model;
 using Helpers;
 
-namespace Day14;
+namespace Y2022.Day14;
 
 internal class SandSimulator
 {

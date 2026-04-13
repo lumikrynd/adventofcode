@@ -1,30 +1,34 @@
-﻿using Day14.Model;
+using Y2022.Day14.Model;
 using FluentAssertions;
 using Helpers;
 using NUnit.Framework;
 
-namespace Day14;
+namespace Y2022.Day14;
 
-internal class Challenge
+internal class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(24);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		result.Should().Be("24");
 	}
 
 	[Test]
-	public void Part1_MainPuzzle()
+	public void Part2_Example()
 	{
-		var result = Part1(PuzzleInput);
-		result.Should().Be(719);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be("93");
 	}
+}
 
-	private int Part1(IEnumerable<string> textMap)
+public class Challenge(IEnumerable<string> textMap) : ISolver
+{
+	public string Part1()
 	{
 		var sandSource = new Coordinate(500, 0);
 		var caveSpecification = CaveSpecificationParser.Parse(textMap);
@@ -32,25 +36,10 @@ internal class Challenge
 		var SandSimulator = new SandSimulator(cave);
 		SandSimulator.FillSandFrom(sandSource);
 
-		Console.WriteLine($"Sand filled: {SandSimulator.SandFilled}");
-		return SandSimulator.SandFilled;
+		return SandSimulator.SandFilled.ToString();
 	}
 
-	[Test]
-	public void Part2_Example()
-	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(93);
-	}
-
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		var result = Part2(PuzzleInput);
-		result.Should().Be(23390);
-	}
-
-	private int Part2(IEnumerable<string> textMap)
+	public string Part2()
 	{
 		var sandSource = new Coordinate(500, 0);
 		var caveSpecification = CaveSpecificationParser.Parse(textMap);
@@ -58,7 +47,6 @@ internal class Challenge
 		var SandSimulator = new SandSimulator(cave);
 		SandSimulator.FillSandFrom(sandSource);
 
-		Console.WriteLine($"Sand filled: {SandSimulator.SandFilled}");
-		return SandSimulator.SandFilled;
+		return SandSimulator.SandFilled.ToString();
 	}
 }

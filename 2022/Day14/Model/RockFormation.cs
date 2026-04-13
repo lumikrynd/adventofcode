@@ -1,6 +1,6 @@
-﻿using Helpers;
+using Helpers;
 
-namespace Day14.Model;
+namespace Y2022.Day14.Model;
 
 internal class RockFormation : List<Coordinate>
 {

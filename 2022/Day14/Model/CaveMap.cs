@@ -1,8 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Helpers;
 
-namespace Day14.Model
+namespace Y2022.Day14.Model
 {
 	internal class CaveMap
 	{
