@@ -1,6 +1,6 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
-namespace Day18;
+namespace Y2022.Day18;
 
 internal class Parser : IDisposable
 {

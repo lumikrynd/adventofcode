@@ -1,28 +1,24 @@
-namespace Day18;
+using Helpers;
+
+namespace Y2022.Day18;
 
 internal partial class Program
 {
 	static void Main(string[] args)
 	{
-		Part1(Example);
+		var challenge = new Challenge(Example);
+		Console.WriteLine($"Part 1: {challenge.Part1()}, should be 64");
+		Console.WriteLine($"Part 2: {challenge.Part2()}, should be 58");
+	}
+}
 
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part1(Input);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Input);
+public class Challenge(string input) : ISolver
+{
+	public Challenge(IEnumerable<string> input) : this(string.Join('\n', input))
+	{
 	}
 
-	static void Part1(string input)
+	public string Part1()
 	{
 		var coordinates = Parser.ParseInput(input);
 
@@ -38,11 +34,10 @@ internal partial class Program
 			surface -= 2 * CountExistingNeighbors(boulders, coord);
 		}
 
-		Console.WriteLine($"NumberOfRocks: {coordinates.Count}");
-		Console.WriteLine($"Surface: {surface}");
+		return $"{surface}";
 	}
 
-	static void Part2(string input)
+	public string Part2()
 	{
 		var coordinates = Parser.ParseInput(input);
 
@@ -93,8 +88,7 @@ internal partial class Program
 			}
 		}
 
-		Console.WriteLine($"NumberOfRocks: {coordinates.Count}");
-		Console.WriteLine($"Surface: {surface}");
+		return $"{surface}";
 	}
 
 	static bool InsideBound((int x, int y, int z) point, (int x, int y, int z) lower, (int x, int y, int z) upper)
