@@ -1,23 +1,27 @@
-namespace Day03;
+using Helpers;
+
+namespace Y2022.Day03;
 
 internal class Program
 {
 	static void Main(string[] args)
 	{
-		var example = File.ReadLines(@"Data/Example.txt");
-		var mainPuzzle = File.ReadLines(@"Data/Puzzle.txt");
+		var example_input = File.ReadLines(@"Data/Example.txt");
+		var example = new Challenge(example_input);
 
 		Console.WriteLine(@"Part 1");
-		Part1(example);
-		Part1(mainPuzzle);
+		Console.WriteLine(example.Part1());
 		Console.WriteLine();
 
 		Console.WriteLine(@"Part 2");
-		Part2(example);
-		Part2(mainPuzzle);
+		Console.WriteLine(example.Part2());
+		Console.WriteLine();
 	}
+}
 
-	private static void Part1(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		int prioritySum = 0;
 
@@ -27,10 +31,10 @@ internal class Program
 			prioritySum += backpack.GetRearrangementPriority();
 		}
 
-		Console.WriteLine($"PrioritySum: {prioritySum}");
+		return 	$"PrioritySum: {prioritySum}";
 	}
 
-	private static void Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		int prioritySum = 0;
 
@@ -40,6 +44,6 @@ internal class Program
 			prioritySum += group.GetRearrangementPriority();
 		}
 
-		Console.WriteLine($"PrioritySum: {prioritySum}");
+		return $"PrioritySum: {prioritySum}";
 	}
 }

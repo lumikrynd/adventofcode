@@ -1,4 +1,4 @@
-namespace Day03;
+namespace Y2022.Day03;
 
 internal class BackpackParser
 {
