@@ -1,49 +1,43 @@
+using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day04;
+namespace Y2022.Day04;
 
 public class Tests
 {
 	static IEnumerable<string> ExampleData => File.ReadLines(@"Data/Example.txt");
-	static IEnumerable<string> PuzzleData => File.ReadLines(@"Data/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		Part1(ExampleData);
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleData);
+		var c = new Challenge(ExampleData);
+		c.Part1().Should().Be("2");
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		Part2(ExampleData);
+		var c = new Challenge(ExampleData);
+		c.Part2().Should().Be("4");
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleData);
-	}
-
-	public void Part1(IEnumerable<string> data)
+public class Challenge(IEnumerable<string> data) : ISolver
+{
+	public string Part1()
 	{
 		var groups = AssignmentGroupParser.Parse(data);
 
 		var containedCount = groups.Count(g => g.OneContainsAll());
-		Console.WriteLine($"Fully contained count: {containedCount}");
+		return $"{containedCount}";
 	}
 
-	public void Part2(IEnumerable<string> data)
+	public string Part2()
 	{
 		var groups = AssignmentGroupParser.Parse(data);
 
 		var overlapCount = groups.Count(g => g.HasOverlaps());
-		Console.WriteLine($"Has overlaps count: {overlapCount}");
+		return $"{overlapCount}";
 	}
 }

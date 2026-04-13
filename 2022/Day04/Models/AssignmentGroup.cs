@@ -1,4 +1,4 @@
-﻿namespace Day04.Models;
+namespace Y2022.Day04.Models;
 
 internal class AssignmentGroup
 {

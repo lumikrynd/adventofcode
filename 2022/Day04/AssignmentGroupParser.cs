@@ -1,6 +1,6 @@
-using Day04.Models;
+using Y2022.Day04.Models;
 
-namespace Day04;
+namespace Y2022.Day04;
 
 internal class AssignmentGroupParser
 {
