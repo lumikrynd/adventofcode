@@ -1,30 +1,35 @@
-﻿namespace Day17;
+using Helpers;
+
+namespace Y2022.Day17;
 
 internal partial class Program
 {
 	static void Main(string[] args)
 	{
 		Part1(Example);
-
 		Console.WriteLine();
-		Console.WriteLine();
-
-		Part1(Input);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
 		Part2(Example);
-
-		Console.ReadKey();
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Input);
 	}
 
 	static void Part1(string input)
+	{
+		var challenge = new Challenge(input);
+		var result = challenge.Part1();
+		Console.WriteLine($"Tower height: {result}");
+	}
+
+	static void Part2(string input)
+	{
+	}
+}
+
+public class Challenge(string input) : ISolver
+{
+	public Challenge(IEnumerable<string> input) : this(string.Join('\n', input))
+	{
+	}
+
+	public string Part1()
 	{
 		var wind = new Wind(input);
 		var rockShapeGenerator = new RockPatternGenerator();
@@ -32,9 +37,16 @@ internal partial class Program
 
 		AddRocksToMap(map, 2022, wind, rockShapeGenerator);
 
-		Console.WriteLine($"Tower height: {map.Height()}");
+		return map.Height().ToString();
 	}
 
+	public string Part2() {
+		return "";
+	}
+
+	// No clue what is going on here,
+	// Can see I never solved it so I will just leave it be for now...
+	// Will most likely end up trashing it though.
 	static void Part2(string input)
 	{
 		var wind = new Wind(input);
@@ -46,7 +58,6 @@ internal partial class Program
 
 		AddRocksToMap(map, offset, wind, rockShapeGenerator);
 		int previous = map.Height();
-
 
 		Console.WriteLine(length);
 		Console.WriteLine($"Tower height: {previous}");

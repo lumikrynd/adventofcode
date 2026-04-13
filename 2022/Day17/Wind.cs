@@ -1,4 +1,4 @@
-﻿namespace Day17;
+namespace Y2022.Day17;
 
 internal class Wind
 {
