@@ -1,48 +1,40 @@
+using Helpers;
 using NUnit.Framework;
 using Y2023.Day02.Models;
 
 namespace Y2023.Day02;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(8));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("8"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(2286));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("2286"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
+public class Challenge(params IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
-		Part2(PuzzleInput);
-	}
-
-	private int Part1(IEnumerable<string> exampleInput)
-	{
-		var games = Parser.ParseGames(exampleInput);
+		var games = Parser.ParseGames(input);
 		var result = games
 			.Where(IsPossible)
 			.Sum(x => x.GameId);
 
-		Console.WriteLine($"Result: {result}");
-		return result;
+		return result.ToString();
 	}
 
 	private static Set CubeLimit = new()
@@ -60,17 +52,16 @@ public class Challenge
 		return game.Sets.All(CubeLimit.IsSupersetOff);
 	}
 
-	private int Part2(IEnumerable<string> exampleInput)
+	public string Part2()
 	{
-		var games = Parser.ParseGames(exampleInput);
+		var games = Parser.ParseGames(input);
 
 		var result = games
 			.Select(ToNeededColors)
 			.Select(SetPower)
 			.Sum();
 
-		Console.WriteLine($"Result: {result}");
-		return result;
+		return result.ToString();
 	}
 
 	private Set ToNeededColors(Game game)
