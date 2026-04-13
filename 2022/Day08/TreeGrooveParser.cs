@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Day08;
+namespace Y2022.Day08;
 
 internal class TreeGrooveParser
 {

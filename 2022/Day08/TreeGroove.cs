@@ -1,6 +1,6 @@
 using Helpers;
 
-namespace Day08;
+namespace Y2022.Day08;
 
 internal partial class TreeGroove
 {

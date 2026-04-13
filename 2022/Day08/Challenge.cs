@@ -1,77 +1,64 @@
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day08;
+namespace Y2022.Day08;
 
-public class Challenge
+public class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(21);
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
-	}
-
-	private int Part1(IEnumerable<string> puzzleInput)
-	{
-		var groove = TreeGrooveParser.Parse(puzzleInput);
-
-		var count = groove.CountVisibleTrees();
-		Console.WriteLine($"Visible count: {count}");
-
-		return count;
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1_V1();
+		result.Should().Be("21");
 	}
 
 	[Test]
 	public void Part1_V2_Example()
 	{
-		var result = Part1_V2(ExampleInput);
-		result.Should().Be(21);
-	}
-
-	[Test]
-	public void Part1_V2_MainPuzzle()
-	{
-		Part1_V2(PuzzleInput);
-	}
-
-	private int Part1_V2(IEnumerable<string> puzzleInput)
-	{
-		var groove = TreeGrooveParser.Parse(puzzleInput);
-
-		var count = groove.CountVisibleTreesV2();
-		Console.WriteLine($"Visible count: {count}");
-
-		return count;
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1_V2();
+		result.Should().Be("21");
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(8);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be("8");
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
+public class Challenge(IEnumerable<string> puzzleInput) : ISolver
+{
+	public string Part1() => Part1_V1();
+
+	public string Part1_V1()
 	{
-		Part2(PuzzleInput);
+		var groove = TreeGrooveParser.Parse(puzzleInput);
+
+		var count = groove.CountVisibleTrees();
+
+		return count.ToString();
 	}
 
-	private int Part2(IEnumerable<string> puzzleInput)
+	public string Part1_V2()
+	{
+		var groove = TreeGrooveParser.Parse(puzzleInput);
+
+		var count = groove.CountVisibleTreesV2();
+
+		return count.ToString();
+	}
+
+	public string Part2()
 	{
 		var groove = TreeGrooveParser.Parse(puzzleInput);
 		(int value, var coordinate) = ScenicSpotFinder.FindScenicSpotValue(groove);
-		Console.WriteLine($"Scenic value: {value} at ({coordinate.X}, {coordinate.Y})");
-		return value;
+		return value.ToString();
 	}
 }

@@ -1,4 +1,4 @@
-namespace Day08;
+namespace Y2022.Day08;
 
 public class TreeCordinate
 {
