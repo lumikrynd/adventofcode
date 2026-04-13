@@ -1,33 +1,17 @@
-﻿using Day20.Circular;
+using Y2022.Day20.Circular;
+using Helpers;
 
-namespace Day20;
+namespace Y2022.Day20;
 
 internal partial class Program
 {
 	static void Main(string[] args)
 	{
 		UniqueTest(Example);
-		UniqueTest(Input);
 
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part1(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part1(Input);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Input);
+		var challenge = new Challenge(Example);
+		Console.WriteLine($"Part 1: {challenge.Part1()}, should be 3");
+		Console.WriteLine($"Part 2: {challenge.Part2()}, should be 1623178306");
 	}
 
 	private static void UniqueTest(string input)
@@ -36,12 +20,19 @@ internal partial class Program
 		var unique = initial.Distinct().ToList();
 		Console.WriteLine($"All are unique: {initial.Count == unique.Count}");
 	}
+}
 
-	private static void Part1(string input)
+public class Challenge(string input) : ISolver
+{
+	public Challenge(IEnumerable<string> input) : this(string.Join('\n', input))
+	{
+	}
+
+	public string Part1()
 	{
 		var numbers = Parser.ParseInput(input);
 
-		var circular = new CircularList<int>(numbers);
+		var circular = new Circular.CircularList<int>(numbers);
 		var sequence = circular.ToArray();
 
 		LinkedItem<int>? zero = null;
@@ -69,31 +60,28 @@ internal partial class Program
 		{
 			current = current.Next;
 		}
-		Console.WriteLine($"Value 1 : {current.Value}");
 		score += current.Value;
 
 		for(int i = 0; i < 1000; i++)
 		{
 			current = current.Next;
 		}
-		Console.WriteLine($"Value 2 : {current.Value}");
 		score += current.Value;
 
 		for(int i = 0; i < 1000; i++)
 		{
 			current = current.Next;
 		}
-		Console.WriteLine($"Value 3 : {current.Value}");
 		score += current.Value;
 
-		Console.WriteLine($"Sum : {score}");
+		return $"{score}";
 	}
 
-	private static void Part2(string input)
+	public string Part2()
 	{
 		var numbers = Parser.ParseInput(input).Select(x => (long)x * (long)811589153);
 
-		var circular = new CircularList<long>(numbers);
+		var circular = new Circular.CircularList<long>(numbers);
 		var sequence = circular.ToArray();
 
 		if(sequence.Length != numbers.Count())
@@ -126,7 +114,7 @@ internal partial class Program
 
 		long score = CalculateScore(zero);
 
-		Console.WriteLine($"Sum : {score}");
+		return $"{score}";
 	}
 
 	private static long CalculateScore(LinkedItem<long>? zero)
@@ -142,7 +130,6 @@ internal partial class Program
 			if((i + 1) % 1000 == 0)
 			{
 				score += current.Value;
-				Console.WriteLine($"Value {(i + 1) / 1000} : {current.Value}");
 			}
 		}
 

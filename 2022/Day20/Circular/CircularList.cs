@@ -1,6 +1,6 @@
-﻿using System.Collections;
+using System.Collections;
 
-namespace Day20.Circular;
+namespace Y2022.Day20.Circular;
 
 internal class CircularList<T> : IEnumerable<LinkedItem<T>>
 {

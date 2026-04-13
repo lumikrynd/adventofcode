@@ -1,4 +1,4 @@
-﻿namespace Day20.Circular;
+namespace Y2022.Day20.Circular;
 
 internal class LinkedItem<T>
 {
