@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+dotnet reference --project Main/ add "$1"
+dotnet reference --project "$1" add Helpers/

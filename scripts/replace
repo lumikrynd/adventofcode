@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+#Arguments
+# 1 Folder,
+# 2 Word to replace
+# 3 Word to insert instead
+
+find "$1" -type f -name "*.cs" -exec sed -i "s/$2/$3/g" {} +

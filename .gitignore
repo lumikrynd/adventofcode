@@ -11,6 +11,8 @@
 !.editorconfig
 !README.md
 !run
+!/[sS]cripts/*
+
 !**.cs
 !**.csproj
 !**.sln
