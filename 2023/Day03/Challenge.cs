@@ -4,38 +4,30 @@ using Y2023.Day03.Models;
 
 namespace Y2023.Day03;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(4361));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("4361"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(467835));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("467835"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private int Part1(IEnumerable<string> input)
+public class Challenge(params IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var map = Parser.ParseMap(input);
 
@@ -49,18 +41,16 @@ public class Challenge
 				value += part.Value;
 		}
 
-		Console.WriteLine($"Result: {value}");
-		return value;
+		return value.ToString();
 	}
 
-	private long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var map = Parser.ParseMap(input);
 		var starMap = CreateMapOverStars(map);
 		long value = CalculateGearing(starMap);
 
-		Console.WriteLine($"Result: {value}");
-		return value;
+		return value.ToString();
 	}
 
 	private static Dictionary<Coordinate, List<int>> CreateMapOverStars(Map map)
