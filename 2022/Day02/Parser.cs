@@ -1,4 +1,4 @@
-﻿namespace Day02;
+namespace Y2022.Day02;
 
 internal class Parser : IDisposable
 {

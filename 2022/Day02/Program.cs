@@ -1,42 +1,46 @@
-﻿namespace Day02;
+using Helpers;
+
+namespace Y2022.Day02;
 
 internal partial class Program
 {
 	static void Main(string[] args)
 	{
-		Part1(Example);
+		var example = new Challenge(Example);
+		Console.WriteLine(example.Part1());
+		Console.WriteLine(example.Part2());
+	}
+}
 
-		Console.WriteLine();
-		Console.WriteLine();
+public class Challenge : ISolver
+{
+	private readonly string input;
 
-		Part1(Input);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Input);
+	public Challenge(string input)
+	{
+		this.input = input;
 	}
 
-	private static void Part1(string input)
+	public Challenge(IEnumerable<string> lines)
+	{
+		input = string.Join('\n', lines);
+	}
+
+	public string Part1()
 	{
 		var games = Parser.ParseInput(input);
 
 		var totalScore = games.Sum(g => g.Score());
 
-		Console.Write($"Final Score: {totalScore}");
+		return $"Final Score: {totalScore}";
 	}
 
-	private static void Part2(string input)
+	public string Part2()
 	{
 		var games = Parser.ParseInputV2(input);
 
 		var totalScore = games.Sum(g => g.Score());
 
-		Console.Write($"Final Score: {totalScore}");
+		return $"Final Score: {totalScore}";
 	}
 }

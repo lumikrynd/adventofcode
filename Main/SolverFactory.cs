@@ -27,6 +27,7 @@ internal static class SolverFactory
 		factory = day switch
 		{
 			1 => x => new Y2022.Day01.Challenge(x),
+			2 => x => new Y2022.Day02.Challenge(x),
 			_ => null,
 		};
 
