@@ -1,28 +1,38 @@
-﻿namespace Day13;
+using Helpers;
+
+namespace Y2022.Day13;
 
 internal partial class Program
 {
 	static void Main(string[] args)
 	{
 		Part1(Example);
-
 		Console.WriteLine();
-		Console.WriteLine();
-
-		Part1(Input);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
 		Part2(Example);
-
-		Console.WriteLine();
-		Console.WriteLine();
-
-		Part2(Input);
 	}
 
 	private static void Part1(string input)
+	{
+		var challenge = new Challenge(input);
+		var sum = challenge.Part1();
+		Console.WriteLine(sum);
+	}
+
+	private static void Part2(string input)
+	{
+		var challenge = new Challenge(input);
+		var result = challenge.Part2();
+		Console.WriteLine($"Result : {result}");
+	}
+}
+
+public class Challenge(string input) : ISolver
+{
+	public Challenge(IEnumerable<string> input) : this(string.Join('\n', input))
+	{
+	}
+
+	public string Part1()
 	{
 		var data = Parser.ParseInput(input);
 
@@ -34,14 +44,12 @@ internal partial class Program
 
 			if (comparison <= 0)
 				sum += i + 1;
-
-			Console.WriteLine($"{i} : {comparison <= 0}");
 		}
 
-		Console.WriteLine(sum);
+		return sum.ToString();
 	}
 
-	private static void Part2(string input)
+	public string Part2()
 	{
 		var data = Parser.ParseInput(input);
 		var extra = Parser.ParseInput(Extra).First();
@@ -60,10 +68,12 @@ internal partial class Program
 			if (extra.Right.CompareTo(d.Right) > 0) rightCount++;
 		}
 
-		Console.WriteLine($"Left count : {leftCount}");
-		Console.WriteLine($"Right count : {rightCount}");
-
 		var result = (leftCount + 1) * (rightCount + 2);
-		Console.WriteLine($"Result : {result}");
+		return result.ToString();
 	}
+
+	static readonly string Extra =
+@"[[2]]
+[[6]]";
+
 }

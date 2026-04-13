@@ -1,4 +1,4 @@
-namespace Day13.Model;
+namespace Y2022.Day13.Model;
 
 internal class SingleValue : IValue
 {

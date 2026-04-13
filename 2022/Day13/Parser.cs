@@ -1,6 +1,6 @@
-using Day13.Model;
+using Y2022.Day13.Model;
 
-namespace Day13;
+namespace Y2022.Day13;
 
 internal class Parser : IDisposable
 {
