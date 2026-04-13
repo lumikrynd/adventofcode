@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Day05.Parsers;
+namespace Y2022.Day05.Parsers;
 
 internal class StacksParser
 {

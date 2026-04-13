@@ -1,8 +1,8 @@
-using Day05.Models;
+using Y2022.Day05.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Day05;
+namespace Y2022.Day05;
 
 public class SupplyStacksTests
 {

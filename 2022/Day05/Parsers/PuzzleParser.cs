@@ -1,6 +1,6 @@
-using Day05.Models;
+using Y2022.Day05.Models;
 
-namespace Day05.Parsers;
+namespace Y2022.Day05.Parsers;
 
 internal class PuzzleParser
 {

@@ -1,47 +1,40 @@
-using Day05.Models;
-using Day05.Parsers;
+using Y2022.Day05.Models;
+using Y2022.Day05.Parsers;
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day05;
+namespace Y2022.Day05;
 
-public class Challenge
+public class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
 		result.Should().BeEquivalentTo("CMZ");
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
 		result.Should().BeEquivalentTo("MCD");
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	public string Part1(IEnumerable<string> data)
+public class Challenge(IEnumerable<string> data) : ISolver
+{
+	public string Part1()
 	{
 		return SolvePuzzle(data, new OldCrane());
 	}
 
-	public string Part2(IEnumerable<string> data)
+	public string Part2()
 	{
 		return SolvePuzzle(data, new StackCrane());
 	}
@@ -62,7 +55,6 @@ public class Challenge
 			top.Add(stackTop);
 		}
 		var result = string.Concat(top);
-		Console.WriteLine($"Result: {result}");
 		return result;
 	}
 }

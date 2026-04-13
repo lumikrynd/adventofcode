@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Day05.Models;
+namespace Y2022.Day05.Models;
 
 internal class SupplyStacks
 {
