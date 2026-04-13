@@ -1,64 +1,56 @@
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day09;
+namespace Y2022.Day09;
 
-public class Challenge
+public class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
 	IEnumerable<string> ExampleInput2 => File.ReadLines(@"Input/Example2.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(13);
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		var result = Part1(PuzzleInput);
-		result.Should().Be(6522);
-	}
-
-	private int Part1(IEnumerable<string> puzzleInput)
-	{
-		return CalculateWithRopeLength(puzzleInput, 2);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		result.Should().Be("13");
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(1);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be("1");
 	}
 
 	[Test]
 	public void Part2_Example2()
 	{
-		var result = Part2(ExampleInput2);
-		result.Should().Be(36);
+		var challenge = new Challenge(ExampleInput2);
+		var result = challenge.Part2();
+		result.Should().Be("36");
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
+public class Challenge(IEnumerable<string> puzzleInput) : ISolver
+{
+	public string Part1()
 	{
-		Part2(PuzzleInput);
+		return CalculateWithRopeLength(2).ToString();
 	}
 
-	private int Part2(IEnumerable<string> puzzleInput)
+	public string Part2()
 	{
-		return CalculateWithRopeLength(puzzleInput, 10);
+		return CalculateWithRopeLength(10).ToString();
 	}
 
-	private static int CalculateWithRopeLength(IEnumerable<string> puzzleInput, int ropeLength)
+	private int CalculateWithRopeLength(int ropeLength)
 	{
 		var moves = MovesParser.Parse(puzzleInput);
 		RopeEmulator re = new RopeEmulator(moves, ropeLength);
 		int visitedCount = re.Visited.Count;
-		Console.WriteLine($"visited: {visitedCount}");
 		return visitedCount;
 	}
 }

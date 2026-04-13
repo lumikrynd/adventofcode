@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Helpers;
 
-namespace Day09;
+namespace Y2022.Day09;
 
 internal class RopeEmulator
 {
