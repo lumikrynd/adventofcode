@@ -1,6 +1,6 @@
-﻿using Day10.Models;
+using Y2022.Day10.Models;
 
-namespace Day10.Parsing;
+namespace Y2022.Day10.Parsing;
 
 internal class InstructionsParser
 {

@@ -1,4 +1,4 @@
-﻿namespace Day10.Models;
+namespace Y2022.Day10.Models;
 
 internal interface Instruction
 {

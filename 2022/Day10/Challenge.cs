@@ -1,68 +1,42 @@
 using System.Text;
-using Day10.Parsing;
+using Y2022.Day10.Parsing;
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day10;
+namespace Y2022.Day10;
 
-public class Challenge
+public class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
-	IEnumerable<string> SmallInput => File.ReadLines(@"Input/SmallInput.txt");
-
-	[Test]
-	public void TestPrint_SmallInput()
-	{
-		var runner = TestPrint(SmallInput);
-		runner.GetXValue(1).Should().Be(1);
-		runner.GetXValue(2).Should().Be(1);
-		runner.GetXValue(3).Should().Be(1);
-		runner.GetXValue(4).Should().Be(4);
-		runner.GetXValue(5).Should().Be(4);
-		runner.GetXValue(6).Should().Be(0);
-	}
-
-	[Test]
-	public void TestPrint_Example()
-	{
-		TestPrint(ExampleInput);
-	}
-
-	[Test]
-	public void TestPrint_MainPuzzle()
-	{
-		TestPrint(PuzzleInput);
-	}
-
-	private CommandRunner TestPrint(IEnumerable<string> puzzleInput)
-	{
-		var instructions = InstructionsParser.Parse(puzzleInput);
-		var runner = new CommandRunner(instructions);
-
-		for(int i = 1; i <= 240; i++)
-		{
-			Console.WriteLine($"Value {i}: {runner.GetXValue(i)}");
-		}
-
-		return runner;
-	}
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(13140);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		result.Should().Be("13140");
 	}
 
 	[Test]
-	public void Part1_MainPuzzle()
+	public void Part2_Example()
 	{
-		var result = Part1(PuzzleInput);
-		result.Should().Be(12640);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be(
+@"##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######.....
+");
 	}
+}
 
-	private int Part1(IEnumerable<string> puzzleInput)
+public class Challenge(IEnumerable<string> puzzleInput) : ISolver
+{
+	public string Part1()
 	{
 		var instructions = InstructionsParser.Parse(puzzleInput);
 		var runner = new CommandRunner(instructions);
@@ -73,31 +47,10 @@ public class Challenge
 			sum += i * runner.GetXValue(i);
 		}
 
-		Console.WriteLine($"Sum: {sum}");
-		return sum;
+		return sum.ToString();
 	}
 
-	[Test]
-	public void Part2_Example()
-	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(
-@"##..##..##..##..##..##..##..##..##..##..
-###...###...###...###...###...###...###.
-####....####....####....####....####....
-#####.....#####.....#####.....#####.....
-######......######......######......####
-#######.......#######.......#######.....
-");
-	}
-
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private string Part2(IEnumerable<string> puzzleInput)
+	public string Part2()
 	{
 		const int WIDTH = 40;
 		const int HEIGHT = 6;
@@ -116,8 +69,6 @@ public class Challenge
 			if(cycle % WIDTH == 0)
 				screen.AppendLine();
 		}
-
-		Console.Write(screen.ToString().Replace('.', ' '));
 
 		return screen.ToString();
 

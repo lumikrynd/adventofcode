@@ -1,6 +1,6 @@
-﻿using Day10.Models;
+using Y2022.Day10.Models;
 
-namespace Day10;
+namespace Y2022.Day10;
 
 internal class CommandRunner
 {
