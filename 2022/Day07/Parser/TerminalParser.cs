@@ -1,10 +1,10 @@
-using Day07.Model.Commands;
-using Day07.Model.FileSystem;
+using Y2022.Day07.Model.Commands;
+using Y2022.Day07.Model.FileSystem;
 using Helpers;
-using Directory = Day07.Model.FileSystem.Directory;
-using File = Day07.Model.FileSystem.File;
+using Directory = Y2022.Day07.Model.FileSystem.Directory;
+using File = Y2022.Day07.Model.FileSystem.File;
 
-namespace Day07.Parser;
+namespace Y2022.Day07.Parser;
 
 public class TerminalParser
 {

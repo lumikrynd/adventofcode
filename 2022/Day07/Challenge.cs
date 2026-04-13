@@ -1,46 +1,39 @@
-using Day07.Model.Commands;
-using Day07.Model.FileSystem;
-using Day07.Parser;
+using Y2022.Day07.Model.Commands;
+using Y2022.Day07.Model.FileSystem;
+using Y2022.Day07.Parser;
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-using Directory = Day07.Model.FileSystem.Directory;
+using Directory = Y2022.Day07.Model.FileSystem.Directory;
 using File = System.IO.File;
 
-namespace Day07;
+namespace Y2022.Day07;
 
-public class Challenge
+public class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(95437);
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		result.Should().Be(95437.ToString());
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(24933642);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be(24933642.ToString());
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	public long Part1(IEnumerable<string> data)
+public class Challenge(params IEnumerable<string> data) : ISolver
+{
+	public string Part1()
 	{
 		IEnumerable<Directory> directories = DirectoriesList(data);
 
@@ -51,8 +44,7 @@ public class Challenge
 				sum += dir.GetSize();
 		}
 
-		Console.Write($"sum: {sum}");
-		return sum;
+		return sum.ToString();
 	}
 
 	private static IEnumerable<Directory> DirectoriesList(IEnumerable<string> data)
@@ -70,7 +62,7 @@ public class Challenge
 		return directories.Prepend(fileSystem.GetRoot());
 	}
 
-	public int Part2(IEnumerable<string> data)
+	public string Part2()
 	{
 		const int CAPACITY = 70000000;
 		const int NEEDED = 30000000;
@@ -81,15 +73,10 @@ public class Challenge
 		var unusedSpace = CAPACITY - root.GetSize();
 		var needToFree = NEEDED - unusedSpace;
 
-		Console.WriteLine($"Unused: {unusedSpace:N1}");
-		Console.WriteLine($"Need to free: {needToFree:N1}");
-
 		var toRemove = directories
 			.Where(x => x.GetSize() >= needToFree)
 			.MinBy(x => x.GetSize());
 
-		Console.WriteLine($"Remove dir {toRemove!.Name} with size {toRemove!.GetSize():N1}");
-
-		return toRemove!.GetSize();
+		return toRemove!.GetSize().ToString();
 	}
 }

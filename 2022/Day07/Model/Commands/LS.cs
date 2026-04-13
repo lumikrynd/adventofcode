@@ -1,6 +1,6 @@
-using Day07.Model.FileSystem;
+using Y2022.Day07.Model.FileSystem;
 
-namespace Day07.Model.Commands;
+namespace Y2022.Day07.Model.Commands;
 
 public class LS : ICommand
 {

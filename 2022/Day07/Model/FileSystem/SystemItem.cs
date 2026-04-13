@@ -1,4 +1,4 @@
-﻿namespace Day07.Model.FileSystem;
+namespace Y2022.Day07.Model.FileSystem;
 
 public interface ISystemItem
 {

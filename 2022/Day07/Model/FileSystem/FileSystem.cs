@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Day07.Model.Commands;
+using Y2022.Day07.Model.Commands;
 
-namespace Day07.Model.FileSystem;
+namespace Y2022.Day07.Model.FileSystem;
 
 internal class FileSystem
 {
