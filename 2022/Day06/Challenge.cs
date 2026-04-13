@@ -1,13 +1,11 @@
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day06;
+namespace Y2022.Day06;
 
-public class Challenge
+public class Test
 {
-	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	string PuzzleInput => File.ReadAllText(@"Input/Puzzle.txt");
-
 	public static IEnumerable<object[]> ExampleData()
 	{
 		yield return new object[] { "mjqjpqmgbljsphdztnvjfqwrcgsmlb", 7, 19 };
@@ -20,37 +18,30 @@ public class Challenge
 	[TestCaseSource(nameof(ExampleData))]
 	public void Part1_Example(string input, int expectedResult, int _)
 	{
-		var result = Part1(input);
-		result.Should().Be(expectedResult);
-	}
-
-	[Test]
-	public void Part1_Puzzle()
-	{
-		Part1(PuzzleInput);
-	}
-
-	public int Part1(string input)
-	{
-		return PuzzleSolution(input, 4);
+		var challenge = new Challenge(input);
+		var result = challenge.Part1();
+		result.Should().Be(expectedResult.ToString());
 	}
 
 	[TestCaseSource(nameof(ExampleData))]
 	public void Part2_Example(string input, int _, int expectedResult)
 	{
-		var result = Part2(input);
-		result.Should().Be(expectedResult);
+		var challenge = new Challenge(input);
+		var result = challenge.Part2();
+		result.Should().Be(expectedResult.ToString());
+	}
+}
+
+public class Challenge(params IEnumerable<string> data) : ISolver
+{
+	public string Part1()
+	{
+		return PuzzleSolution(data.Single(), 4).ToString();
 	}
 
-	[Test]
-	public void Part2_Puzzle()
+	public string Part2()
 	{
-		Part2(PuzzleInput);
-	}
-
-	public int Part2(string input)
-	{
-		return PuzzleSolution(input, 14);
+		return PuzzleSolution(data.Single(), 14).ToString();
 	}
 
 	private static int PuzzleSolution(string input, int packageSize)
@@ -70,7 +61,6 @@ public class Challenge
 				break;
 		}
 
-		Console.WriteLine($"Result: {count}");
 		return count;
 	}
 }

@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Input\Puzzle.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
   </ItemGroup>
 
 </Project>

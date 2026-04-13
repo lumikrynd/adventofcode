@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace Day06;
+namespace Y2022.Day06;
 
 internal class CircularStorage : IEnumerable<char>
 {
