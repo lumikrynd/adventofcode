@@ -19,10 +19,11 @@ internal class Program
 		var input = await GetPuzzleInput(year, day);
 		var solver = factory(input);
 
-		Console.WriteLine("Solving part 1");
-		Console.WriteLine($"Solution: {solver.Part1()}");
-		Console.WriteLine("Solving part 2");
-		Console.WriteLine($"Solution: {solver.Part2()}");
+		Console.WriteLine("Solving part 1:");
+		Console.WriteLine($"{solver.Part1()}");
+		Console.WriteLine();
+		Console.WriteLine("Solving part 2:");
+		Console.WriteLine($"{solver.Part2()}");
 	}
 
 	private static bool ParseArgs(string[] args, [NotNullWhen(true)] out (int, int)? result)
