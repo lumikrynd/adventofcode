@@ -1,31 +1,35 @@
-﻿using Day12.Maps;
-using Day12.Pathfinding;
+using Y2022.Day12.Maps;
+using Y2022.Day12.Pathfinding;
 using FluentAssertions;
 using Helpers;
 using NUnit.Framework;
 
-namespace Day12;
-internal class Challenge
+namespace Y2022.Day12;
+
+internal class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
-
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(31);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		result.Should().Be("31");
 	}
 
 	[Test]
-	public void Part1_MainPuzzle()
+	public void Part2_Example()
 	{
-		var result = Part1(PuzzleInput);
-		result.Should().Be(370);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be("29");
 	}
+}
 
-	private int Part1(IEnumerable<string> textMap)
+public class Challenge(IEnumerable<string> textMap) : ISolver
+{
+	public string Part1()
 	{
 		var map = MapParser.ParseMap(textMap.ToArray());
 		map.Start = map.S;
@@ -33,8 +37,7 @@ internal class Challenge
 		map.StepPossible = NormalTraverselStepChecker(map);
 
 		var path = BreathFirstSearch.CalculatePath(map);
-		Console.WriteLine(path.Count);
-		return path.Count;
+		return path.Count.ToString();
 	}
 
 	private Func<Coordinate, Coordinate, bool> NormalTraverselStepChecker(Map map)
@@ -46,21 +49,7 @@ internal class Challenge
 		};
 	}
 
-	[Test]
-	public void Part2_Example()
-	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(29);
-	}
-
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		var result = Part2(PuzzleInput);
-		result.Should().Be(363);
-	}
-
-	private int Part2(IEnumerable<string> textMap)
+	public string Part2()
 	{
 		var map = MapParser.ParseMap(textMap.ToArray());
 		map.Start = map.E;
@@ -68,8 +57,7 @@ internal class Challenge
 		map.StepPossible = InvertedTraverselStepChecker(map);
 
 		var path = BreathFirstSearch.CalculatePath(map);
-		Console.WriteLine(path.Count);
-		return path.Count;
+		return path.Count.ToString();
 	}
 
 	private Func<Coordinate, Coordinate, bool> InvertedTraverselStepChecker(Map map)

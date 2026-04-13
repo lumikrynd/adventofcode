@@ -1,6 +1,6 @@
-﻿using Helpers;
+using Helpers;
 
-namespace Day12.Maps;
+namespace Y2022.Day12.Maps;
 
 internal static class MapParser
 {

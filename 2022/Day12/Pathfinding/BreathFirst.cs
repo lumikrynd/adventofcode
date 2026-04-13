@@ -1,7 +1,7 @@
-﻿using Helpers;
-using Day12.Maps;
+using Helpers;
+using Y2022.Day12.Maps;
 
-namespace Day12.Pathfinding;
+namespace Y2022.Day12.Pathfinding;
 
 internal class BreathFirstSearch
 {
