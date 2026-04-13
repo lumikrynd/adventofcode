@@ -1,9 +1,9 @@
-﻿using Day15.Parsing;
+using Y2022.Day15.Parsing;
 using FluentAssertions;
 using Helpers;
 using NUnit.Framework;
 
-namespace Day15.Tests;
+namespace Y2022.Day15.Tests;
 
 internal class MapCreaterTests
 {

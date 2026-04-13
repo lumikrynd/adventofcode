@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Helpers;
 
-namespace Day15.Model;
+namespace Y2022.Day15.Model;
 
 internal class SplitNode : INode
 {

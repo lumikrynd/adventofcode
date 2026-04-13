@@ -1,6 +1,6 @@
-﻿using Helpers;
+using Helpers;
 
-namespace Day15.Parsing;
+namespace Y2022.Day15.Parsing;
 
 internal class SensorResponse
 {

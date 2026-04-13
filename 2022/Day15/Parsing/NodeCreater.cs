@@ -1,8 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Day15.Model;
+using System.Diagnostics.CodeAnalysis;
+using Y2022.Day15.Model;
 using Helpers;
 
-namespace Day15.Parsing;
+namespace Y2022.Day15.Parsing;
 
 internal class NodeCreater
 {
