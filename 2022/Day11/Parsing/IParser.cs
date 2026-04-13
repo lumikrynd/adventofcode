@@ -1,4 +1,4 @@
-﻿namespace Day11.Parsing;
+namespace Y2022.Day11.Parsing;
 
 public interface IParser<TIn, TOut>
 {

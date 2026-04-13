@@ -1,30 +1,35 @@
-using Day11.Models;
-using Day11.Parsing;
+using Y2022.Day11.Models;
+using Y2022.Day11.Parsing;
 using FluentAssertions;
+using Helpers;
 using NUnit.Framework;
 
-namespace Day11;
+namespace Y2022.Day11;
 
-public class Challenge
+public class Test
 {
 	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		result.Should().Be(10605);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		result.Should().Be("10605");
 	}
 
 	[Test]
-	public void Part1_MainPuzzle()
+	public void Part2_Example()
 	{
-		var result = Part1(PuzzleInput);
-		result.Should().Be(78960);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		result.Should().Be("2713310158");
 	}
+}
 
-	private int Part1(IEnumerable<string> puzzleInput)
+public class Challenge(IEnumerable<string> puzzleInput) : ISolver
+{
+	public string Part1()
 	{
 		var parser = MonkeyListParser.CreateParser();
 		var monkeys = parser.Parse(puzzleInput.ToList());
@@ -41,7 +46,6 @@ public class Challenge
 		for(int i = 0; i < monkeys.Count; i++)
 		{
 			var monkey = monkeys[i];
-			Console.WriteLine($"Monkey {i}: {monkey.InspectCount}");
 		}
 
 		var SortedInspectCounts = monkeys
@@ -50,25 +54,11 @@ public class Challenge
 			.ToList();
 
 		var result = SortedInspectCounts[0] * SortedInspectCounts[1];
-		Console.WriteLine($"Multiply result: {result}");
-		return result;
+
+		return result.ToString();
 	}
 
-	[Test]
-	public void Part2_Example()
-	{
-		var result = Part2(ExampleInput);
-		result.Should().Be(2713310158);
-	}
-
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		var result = Part2(PuzzleInput);
-		result.Should().Be(14561971968);
-	}
-
-	private long Part2(IEnumerable<string> puzzleInput)
+	public string Part2()
 	{
 		var parser = MonkeyListParser.CreateParser();
 		var monkeys = parser.Parse(puzzleInput.ToList());
@@ -90,7 +80,6 @@ public class Challenge
 		for(int i = 0; i < monkeys.Count; i++)
 		{
 			var monkey = monkeys[i];
-			Console.WriteLine($"Monkey {i}: {monkey.InspectCount}");
 		}
 
 		var SortedInspectCounts = monkeys
@@ -99,21 +88,17 @@ public class Challenge
 			.ToList();
 
 		var result = (long)SortedInspectCounts[0] * SortedInspectCounts[1];
-		Console.WriteLine($"Multiply result: {result}");
-		return result;
+		return result.ToString();
 	}
 
 	private void LogMonkeys(int round, List<Monkey> monkeys)
 	{
 		if(round is 1 or 20 || round % 1000 == 0)
 		{
-			Console.WriteLine($"Round: {round}");
 			for(int i = 0; i < monkeys.Count; i++)
 			{
 				var monkey = monkeys[i];
-				Console.WriteLine($"Monkey {i}: {monkey.InspectCount}");
 			}
-			Console.WriteLine();
 		}
 	}
 

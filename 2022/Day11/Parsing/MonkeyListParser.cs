@@ -1,6 +1,6 @@
-﻿using Day11.Models;
+using Y2022.Day11.Models;
 
-namespace Day11.Parsing;
+namespace Y2022.Day11.Parsing;
 
 public class MonkeyListParser : IParser<List<string>, List<Monkey>>
 {
