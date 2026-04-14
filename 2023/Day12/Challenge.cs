@@ -1,50 +1,43 @@
+using Helpers;
 using NUnit.Framework;
 using Y2023.Day12.Models;
 
 namespace Y2023.Day12;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(21));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("21"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(525152));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("525152"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private static long Part1(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var infos = Parser.Parse(input);
-		return CountAllArrangements(infos);
+		return CountAllArrangements(infos).ToString();
 	}
 
-	private static long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var model = Parser.Parse(input);
 		var unfolded = model.Select(Unfold).ToList();
-		return CountAllArrangements(unfolded);
+		return CountAllArrangements(unfolded).ToString();
 	}
 
 	private static long CountAllArrangements(List<SpringInfo> infos)
@@ -55,7 +48,6 @@ public class Challenge
 			sum += ArrangementsCounter.CountArrangements(info);
 		}
 
-		Console.WriteLine($"Result: {sum}");
 		return sum;
 	}
 
