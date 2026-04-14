@@ -1,41 +1,34 @@
+using Helpers;
 using NUnit.Framework;
 using Y2023.Day08.Models;
 
 namespace Y2023.Day08;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
 	static IEnumerable<string> Example2Input => File.ReadLines(@"Input/Example2.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(6));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("6"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(Example2Input);
-		Assert.That(result, Is.EqualTo(6));
+		var challenge = new Challenge(Example2Input);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("6"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private long Part1(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var model = Parser.Parse(input);
 
@@ -44,11 +37,10 @@ public class Challenge
 
 		long steps = HowLongPath(model, location, l => l == goal);
 
-		Console.Write($"Result: {steps}");
-		return steps;
+		return steps.ToString();
 	}
 
-	private long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var model = Parser.Parse(input);
 		var nodeLookup = model.Nodes.ToDictionary(x => x.Id);
@@ -66,8 +58,7 @@ public class Challenge
 
 		var calculated = LeastCommonMultiple(steps);
 
-		Console.Write($"Result: {calculated}");
-		return calculated;
+		return calculated.ToString();
 	}
 
 	private static long HowLongPath(Map model, string start, Func<string, bool> IsGoal)
