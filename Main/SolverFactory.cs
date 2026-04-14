@@ -61,6 +61,7 @@ internal static class SolverFactory
 			3 => x => new Y2023.Day03.Challenge(x),
 			4 => x => new Y2023.Day04.Challenge(x),
 			5 => x => new Y2023.Day05.Challenge(x),
+			6 => x => new Y2023.Day06.Challenge(x),
 			_ => null,
 		};
 
