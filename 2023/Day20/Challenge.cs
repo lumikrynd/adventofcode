@@ -1,47 +1,41 @@
+using Helpers;
 using NUnit.Framework;
 
 namespace Y2023.Day20;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
 	static IEnumerable<string> ExampleInput2 => File.ReadLines(@"Input/Example2.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(32000000));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("32000000"));
 	}
 
 	[Test]
 	public void Part1_Example2()
 	{
-		var result = Part1(ExampleInput2);
-		Assert.That(result, Is.EqualTo(11687500));
+		var challenge = new Challenge(ExampleInput2);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("11687500"));
 	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
-	}
-
-	//[Test]
-	//public void Part2_Example()
-	//{
-	//	var result = Part2(ExampleInput);
-	//	Assert.That(result, Is.EqualTo(42));
-	//}
 
 	[Test, Ignore("Not done")]
-	public void Part2_MainPuzzle()
+	public void Part2_Example()
 	{
-		Part2(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("42"));
 	}
+}
 
-	private long Part1(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var modules = Parser.Parse(input);
 		var emulator = new Emulator(modules);
@@ -51,17 +45,14 @@ public class Challenge
 		var counts = emulator.GetCounts();
 		var result = 1L * counts.Low * counts.High;
 
-		Console.WriteLine($"Result: {result}");
-		return result;
+		return result.ToString();
 	}
 
-	private long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var modules = Parser.Parse(input);
 		var emulator = new Emulator(modules);
 
-		throw new NotImplementedException();
-		//Console.WriteLine($"Result: {presses}");
-		//return presses;
+		return "";
 	}
 }
