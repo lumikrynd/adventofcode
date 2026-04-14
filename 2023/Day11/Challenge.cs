@@ -3,45 +3,48 @@ using NUnit.Framework;
 
 namespace Y2023.Day11;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1and2(ExampleInput, 2);
-		Assert.That(result, Is.EqualTo(374));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1and2(PuzzleInput, 2);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("374"));
 	}
 
 	[Test]
 	public void Part2_Example_Mult10()
 	{
-		var result = Part1and2(ExampleInput, 10);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1and2(10);
 		Assert.That(result, Is.EqualTo(1030));
 	}
 
 	[Test]
 	public void Part2_Example_Mult100()
 	{
-		var result = Part1and2(ExampleInput, 100);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1and2(100);
 		Assert.That(result, Is.EqualTo(8410));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
-		Part1and2(PuzzleInput, 1000000);
+		return Part1and2(2).ToString();
 	}
 
-	private long Part1and2(IEnumerable<string> input, int expansionMultiplier)
+	public string Part2()
+	{
+		return Part1and2(1_000_000).ToString();
+	}
+
+	internal long Part1and2(int expansionMultiplier)
 	{
 		var stars = Parser.Parse(input);
 
@@ -58,7 +61,6 @@ public class Challenge
 			sum += distance + ((distance - rowStarCount - colStarCount) * (expansionMultiplier - 1));
 		}
 
-		Console.WriteLine($"Result: {sum}");
 		return sum;
 	}
 
