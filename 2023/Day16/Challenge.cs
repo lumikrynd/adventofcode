@@ -4,51 +4,42 @@ using Y2023.Day16.Models;
 
 namespace Y2023.Day16;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(46));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("46"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(51));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("51"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
+public class Challenge(IEnumerable<string> input) : ISolver
+{
 	record Vector(Coordinate coord, Direction direction);
 
-	private long Part1(IEnumerable<string> input)
+	public string Part1()
 	{
 		var map = Parser.Parse(input);
 		var mirrors = map.Mirrors
 			.ToDictionary(m => m.Location);
 
 		int result = CountHitFields(map, mirrors, new(new(-1, 0), Direction.East));
-		Console.WriteLine($"Result: {result}");
-		return result;
+		return result.ToString();
 	}
 
-	private long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var map = Parser.Parse(input);
 		var mirrors = map.Mirrors
@@ -61,8 +52,7 @@ public class Challenge
 			max = Math.Max(max, count);
 		}
 
-		Console.WriteLine($"Result: {max}");
-		return max;
+		return max.ToString();
 	}
 
 	private IEnumerable<Vector> BeamConfigurations(Map map)
