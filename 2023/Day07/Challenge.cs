@@ -40,7 +40,6 @@ public class Challenge(IEnumerable<string> input) : ISolver
 			result += (i + 1) * weakestFirst[i].Bid;
 		}
 
-		Console.Write($"Result: {result}");
 		return result.ToString();
 	}
 
@@ -58,7 +57,6 @@ public class Challenge(IEnumerable<string> input) : ISolver
 			result += (i + 1) * weakestFirst[i].Bid;
 		}
 
-		Console.Write($"Result: {result}");
 		return result.ToString();
 	}
 }

@@ -13,14 +13,10 @@ public class SupplyStacksTests
 		var crane = new OldCrane();
 		Stack<char> stack = new(items);
 
-		foreach(var item in stack)
+		;
+		foreach(var (item, expected) in stack.Zip(items.Reverse<char>()))
 		{
-			Console.WriteLine(item);
-		}
-
-		foreach(var item in items)
-		{
-			Console.WriteLine(item);
+			item.Should().Be(expected);
 		}
 	}
 
