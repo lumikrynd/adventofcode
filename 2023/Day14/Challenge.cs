@@ -4,38 +4,30 @@ using Y2023.Day14.Models;
 
 namespace Y2023.Day14;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(136));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("136"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(64));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("64"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private long Part1(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var model = Parser.Parse(input);
 		var map = new Map(model);
@@ -46,11 +38,10 @@ public class Challenge
 			.Select(x => map.Height - x.Y)
 			.Sum();
 
-		Console.WriteLine($"Result: {load}");
-		return load;
+		return load.ToString();
 	}
 
-	private long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var model = Parser.Parse(input);
 		var map = new Map(model);
@@ -85,8 +76,7 @@ public class Challenge
 			.Select(x => map.Height - x.Y)
 			.Sum();
 
-		Console.WriteLine($"Result: {load}");
-		return load;
+		return load.ToString();
 	}
 
 	private Map TiltNorth(Map map)
