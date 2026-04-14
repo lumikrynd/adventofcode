@@ -1,39 +1,32 @@
+using Helpers;
 using NUnit.Framework;
 
 namespace Y2023.Day09;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(114));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("114"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(2));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("2"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private long Part1(IEnumerable<string> input)
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var model = Parser.Parse(input);
 
@@ -41,8 +34,7 @@ public class Challenge
 			.Select(FindNextInSequence)
 			.Sum();
 
-		Console.Write($"Result: {sum}");
-		return sum;
+		return sum.ToString();
 	}
 
 	private long FindNextInSequence(List<int> sequence)
@@ -58,7 +50,7 @@ public class Challenge
 		return LastOnes.Sum();
 	}
 
-	private long Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var model = Parser.Parse(input);
 
@@ -66,8 +58,7 @@ public class Challenge
 			.Select(FindPreviousInSequence)
 			.Sum();
 
-		Console.Write($"Result: {sum}");
-		return sum;
+		return sum.ToString();
 	}
 
 	private long FindPreviousInSequence(List<int> sequence)
