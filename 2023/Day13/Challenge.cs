@@ -1,40 +1,36 @@
+using Helpers;
 using NUnit.Framework;
 using Y2023.Day13.Models;
 
 namespace Y2023.Day13;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		var result = Part1_2(ExampleInput, 0);
-		Assert.That(result, Is.EqualTo(405));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1_2(PuzzleInput, 0);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("405"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part1_2(ExampleInput, 1);
-		Assert.That(result, Is.EqualTo(400));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("400"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part1_2(PuzzleInput, 1);
-	}
+public class Challenge(IEnumerable<string> input) : ISolver
+{
+	public string Part1() => Part1_2(0).ToString();
+	public string Part2() => Part1_2(1).ToString();
 
-	private long Part1_2(IEnumerable<string> input, int smudges)
+	private long Part1_2(int smudges)
 	{
 		var patterns = Parser.Parse(input);
 
@@ -46,7 +42,6 @@ public class Challenge
 			result += loc * multiply;
 		}
 
-		Console.WriteLine($"Result: {result}");
 		return result;
 	}
 
