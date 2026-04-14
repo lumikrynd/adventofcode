@@ -56,6 +56,7 @@
     <ProjectReference Include="..\2023\Day16\Day16.csproj" />
     <ProjectReference Include="..\2023\Day17\Day17.csproj" />
     <ProjectReference Include="..\2023\Day18\Day18.csproj" />
+    <ProjectReference Include="..\2023\Day19\Day19.csproj" />
   </ItemGroup>
 
 </Project>
