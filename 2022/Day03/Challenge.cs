@@ -1,21 +1,26 @@
 using Helpers;
+using NUnit.Framework;
 
 namespace Y2022.Day03;
 
-internal class Program
+public class Test
 {
-	static void Main(string[] args)
+	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
+
+	[Test]
+	public void Part1_Example()
 	{
-		var example_input = File.ReadLines(@"Data/Example.txt");
-		var example = new Challenge(example_input);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("157"));
+	}
 
-		Console.WriteLine(@"Part 1");
-		Console.WriteLine(example.Part1());
-		Console.WriteLine();
-
-		Console.WriteLine(@"Part 2");
-		Console.WriteLine(example.Part2());
-		Console.WriteLine();
+	[Test]
+	public void Part2_Example()
+	{
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("70"));
 	}
 }
 
@@ -31,7 +36,7 @@ public class Challenge(IEnumerable<string> input) : ISolver
 			prioritySum += backpack.GetRearrangementPriority();
 		}
 
-		return 	$"PrioritySum: {prioritySum}";
+		return prioritySum.ToString();
 	}
 
 	public string Part2()
@@ -44,6 +49,6 @@ public class Challenge(IEnumerable<string> input) : ISolver
 			prioritySum += group.GetRearrangementPriority();
 		}
 
-		return $"PrioritySum: {prioritySum}";
+		return prioritySum.ToString();
 	}
 }

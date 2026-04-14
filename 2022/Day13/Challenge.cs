@@ -1,28 +1,26 @@
 using Helpers;
+using NUnit.Framework;
 
 namespace Y2022.Day13;
 
-internal partial class Program
+public class Test
 {
-	static void Main(string[] args)
+	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
+
+	[Test]
+	public void Part1_Example()
 	{
-		Part1(Example);
-		Console.WriteLine();
-		Part2(Example);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("13"));
 	}
 
-	private static void Part1(string input)
+	[Test]
+	public void Part2_Example()
 	{
-		var challenge = new Challenge(input);
-		var sum = challenge.Part1();
-		Console.WriteLine(sum);
-	}
-
-	private static void Part2(string input)
-	{
-		var challenge = new Challenge(input);
+		var challenge = new Challenge(ExampleInput);
 		var result = challenge.Part2();
-		Console.WriteLine($"Result : {result}");
+		Assert.That(result, Is.EqualTo("140"));
 	}
 }
 

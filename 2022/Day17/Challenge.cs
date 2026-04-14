@@ -1,25 +1,26 @@
 using Helpers;
+using NUnit.Framework;
 
 namespace Y2022.Day17;
 
-internal partial class Program
+public class Test
 {
-	static void Main(string[] args)
-	{
-		Part1(Example);
-		Console.WriteLine();
-		Part2(Example);
-	}
+	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
 
-	static void Part1(string input)
+	[Test]
+	public void Part1_Example()
 	{
-		var challenge = new Challenge(input);
+		var challenge = new Challenge(ExampleInput);
 		var result = challenge.Part1();
-		Console.WriteLine($"Tower height: {result}");
+		Assert.That(result, Is.EqualTo("3068"));
 	}
 
-	static void Part2(string input)
+	[Test, Ignore("Not finished")]
+	public void Part2_Example()
 	{
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("1514285714288"));
 	}
 }
 

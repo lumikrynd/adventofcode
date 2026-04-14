@@ -1,24 +1,27 @@
 using Y2022.Day20.Circular;
 using Helpers;
+using NUnit.Framework;
 
 namespace Y2022.Day20;
 
-internal partial class Program
+public class Test
 {
-	static void Main(string[] args)
-	{
-		UniqueTest(Example);
+	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
 
-		var challenge = new Challenge(Example);
-		Console.WriteLine($"Part 1: {challenge.Part1()}, should be 3");
-		Console.WriteLine($"Part 2: {challenge.Part2()}, should be 1623178306");
+	[Test]
+	public void Part1_Example()
+	{
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("3"));
 	}
 
-	private static void UniqueTest(string input)
+	[Test]
+	public void Part2_Example()
 	{
-		var initial = Parser.ParseInput(input);
-		var unique = initial.Distinct().ToList();
-		Console.WriteLine($"All are unique: {initial.Count == unique.Count}");
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("1623178306"));
 	}
 }
 
