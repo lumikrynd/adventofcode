@@ -1,39 +1,32 @@
+using Helpers;
 using NUnit.Framework;
 
 namespace Y2023.Day04;
 
-public class Challenge
+public class Test
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
-	static IEnumerable<string> PuzzleInput => File.ReadLines(@"Input/Puzzle.txt");
 
 	[Test]
 	public void Part1_Example()
 	{
-		int result = Part1(ExampleInput);
-		Assert.That(result, Is.EqualTo(13));
-	}
-
-	[Test]
-	public void Part1_MainPuzzle()
-	{
-		Part1(PuzzleInput);
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part1();
+		Assert.That(result, Is.EqualTo("13"));
 	}
 
 	[Test]
 	public void Part2_Example()
 	{
-		var result = Part2(ExampleInput);
-		Assert.That(result, Is.EqualTo(30));
+		var challenge = new Challenge(ExampleInput);
+		var result = challenge.Part2();
+		Assert.That(result, Is.EqualTo("30"));
 	}
+}
 
-	[Test]
-	public void Part2_MainPuzzle()
-	{
-		Part2(PuzzleInput);
-	}
-
-	private int Part1(IEnumerable<string> input)
+public class Challenge(params IEnumerable<string> input) : ISolver
+{
+	public string Part1()
 	{
 		var cards = Parser.ParseCards(input);
 
@@ -46,11 +39,10 @@ public class Challenge
 				points += 1 << (matches - 1);
 		}
 
-		Console.WriteLine($"Total points: {points}");
-		return points;
+		return points.ToString();
 	}
 
-	private int Part2(IEnumerable<string> input)
+	public string Part2()
 	{
 		var cards = Parser.ParseCards(input);
 
@@ -71,7 +63,6 @@ public class Challenge
 
 		var totalCards = cardCounts.Sum();
 
-		Console.WriteLine($"Total cards: {totalCards}");
-		return totalCards;
+		return totalCards.ToString();
 	}
 }
