@@ -5,7 +5,7 @@ namespace Y2023.Day04;
 
 public class Test
 {
-	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
+	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Day04/Example.txt");
 
 	[Test]
 	public void Part1_Example()

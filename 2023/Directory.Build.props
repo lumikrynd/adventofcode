@@ -1,9 +1,0 @@
-<Project>
-  <!-- Source
-    https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=visualstudio#use-case-multi-level-merging
-  -->
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" Condition="'' != $([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-  <PropertyGroup>
-    <AssemblyName>Y2023_$(MSBuildProjectName)</AssemblyName>
-  </PropertyGroup>
-</Project>
