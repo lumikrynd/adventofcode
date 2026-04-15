@@ -1,46 +1,6 @@
 <Solution>
-  <Folder Name="/2022/">
-    <Project Path="2022/Day01/Day01.csproj" />
-    <Project Path="2022/Day02/Day02.csproj" />
-    <Project Path="2022/Day03/Day03.csproj" />
-    <Project Path="2022/Day04/Day04.csproj" />
-    <Project Path="2022/Day05/Day05.csproj" />
-    <Project Path="2022/Day06/Day06.csproj" />
-    <Project Path="2022/Day07/Day07.csproj" />
-    <Project Path="2022/Day08/Day08.csproj" />
-    <Project Path="2022/Day09/Day09.csproj" />
-    <Project Path="2022/Day10/Day10.csproj" />
-    <Project Path="2022/Day11/Day11.csproj" />
-    <Project Path="2022/Day12/Day12.csproj" />
-    <Project Path="2022/Day13/Day13.csproj" />
-    <Project Path="2022/Day14/Day14.csproj" />
-    <Project Path="2022/Day15/Day15.csproj" />
-    <Project Path="2022/Day17/Day17.csproj" />
-    <Project Path="2022/Day18/Day18.csproj" />
-    <Project Path="2022/Day20/Day20.csproj" />
-  </Folder>
-  <Folder Name="/2023/">
-    <Project Path="2023/Day01/Day01.csproj" />
-    <Project Path="2023/Day02/Day02.csproj" />
-    <Project Path="2023/Day03/Day03.csproj" />
-    <Project Path="2023/Day04/Day04.csproj" />
-    <Project Path="2023/Day05/Day05.csproj" />
-    <Project Path="2023/Day06/Day06.csproj" />
-    <Project Path="2023/Day07/Day07.csproj" />
-    <Project Path="2023/Day08/Day08.csproj" />
-    <Project Path="2023/Day09/Day09.csproj" />
-    <Project Path="2023/Day10/Day10.csproj" />
-    <Project Path="2023/Day11/Day11.csproj" />
-    <Project Path="2023/Day12/Day12.csproj" />
-    <Project Path="2023/Day13/Day13.csproj" />
-    <Project Path="2023/Day14/Day14.csproj" />
-    <Project Path="2023/Day15/Day15.csproj" />
-    <Project Path="2023/Day16/Day16.csproj" />
-    <Project Path="2023/Day17/Day17.csproj" />
-    <Project Path="2023/Day18/Day18.csproj" />
-    <Project Path="2023/Day19/Day19.csproj" />
-    <Project Path="2023/Day20/Day20.csproj" />
-  </Folder>
+  <Project Path="2022/Y2022.csproj" />
+  <Project Path="2023/Y2023.csproj" />
   <Project Path="Helpers/Helpers.csproj" />
   <Project Path="Main/Main.csproj" />
 </Solution>

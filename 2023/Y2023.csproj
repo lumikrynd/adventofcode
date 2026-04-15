@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Y2023.Day16</RootNamespace>
+    <RootNamespace>Y2023</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -13,12 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Helpers\Helpers.csproj" />
+    <None Update="Input\*\*.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Input\Example.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Helpers\Helpers.csproj" />
   </ItemGroup>
 </Project>
