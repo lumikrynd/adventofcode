@@ -1,29 +1,7 @@
 using Helpers;
-using NUnit.Framework;
 using Y2023.Day14.Models;
 
 namespace Y2023.Day14;
-
-public class Test
-{
-	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Day14/Example.txt");
-
-	[Test]
-	public void Part1_Example()
-	{
-		var challenge = new Challenge(ExampleInput);
-		var result = challenge.Part1();
-		Assert.That(result, Is.EqualTo("136"));
-	}
-
-	[Test]
-	public void Part2_Example()
-	{
-		var challenge = new Challenge(ExampleInput);
-		var result = challenge.Part2();
-		Assert.That(result, Is.EqualTo("64"));
-	}
-}
 
 public class Challenge(IEnumerable<string> input) : ISolver
 {

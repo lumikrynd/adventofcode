@@ -1,10 +1,9 @@
-using Y2022.Day05.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Y2022.Day05;
+namespace Y2022.Day05.Models;
 
-public class SupplyStacksTests
+public class SupplyStacksTest
 {
 	[Test]
 	public void TryingToUnderstandStacksEnumerableInteraction()

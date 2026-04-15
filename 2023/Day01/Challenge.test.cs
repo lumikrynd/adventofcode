@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace Y2023.Day01;
 
-public class Test
+public class ChallengeTest
 {
 	static IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Day01/Example.txt");
 	static IEnumerable<string> Example2Input => File.ReadLines(@"Input/Day01/Example2.txt");
