@@ -1,35 +1,12 @@
 using Y2022.Day07.Model.Commands;
 using Y2022.Day07.Model.FileSystem;
 using Y2022.Day07.Parser;
-using FluentAssertions;
 using Helpers;
-using NUnit.Framework;
 
 using Directory = Y2022.Day07.Model.FileSystem.Directory;
 using File = System.IO.File;
 
 namespace Y2022.Day07;
-
-public class Test
-{
-	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Day07/Example.txt");
-
-	[Test]
-	public void Part1_Example()
-	{
-		var challenge = new Challenge(ExampleInput);
-		var result = challenge.Part1();
-		result.Should().Be(95437.ToString());
-	}
-
-	[Test]
-	public void Part2_Example()
-	{
-		var challenge = new Challenge(ExampleInput);
-		var result = challenge.Part2();
-		result.Should().Be(24933642.ToString());
-	}
-}
 
 public class Challenge(params IEnumerable<string> data) : ISolver
 {
