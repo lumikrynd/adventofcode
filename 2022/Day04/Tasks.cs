@@ -6,7 +6,7 @@ namespace Y2022.Day04;
 
 public class Tests
 {
-	static IEnumerable<string> ExampleData => File.ReadLines(@"Data/Example.txt");
+	static IEnumerable<string> ExampleData => File.ReadLines(@"Input/Day04/Example.txt");
 
 	[Test]
 	public void Part1_Example()

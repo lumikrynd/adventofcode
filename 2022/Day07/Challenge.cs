@@ -12,7 +12,7 @@ namespace Y2022.Day07;
 
 public class Test
 {
-	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
+	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Day07/Example.txt");
 
 	[Test]
 	public void Part1_Example()

@@ -8,7 +8,7 @@ namespace Y2022.Day12;
 
 internal class Test
 {
-	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Example.txt");
+	IEnumerable<string> ExampleInput => File.ReadLines(@"Input/Day12/Example.txt");
 
 	[Test]
 	public void Part1_Example()
